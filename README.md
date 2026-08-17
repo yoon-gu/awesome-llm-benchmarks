@@ -9,20 +9,20 @@
 
 ## 🚀 1. 코딩 및 에이전트 성능 (Coding & Agentic Performance)
 
-가장 핵심이 되는 자율 에이전트 및 코딩 문제 해결 능력입니다. (SWE-bench, LiveCodeBench 등)
+단순 코딩을 넘어 실제 웹 브라우징, 컴퓨터 OS 제어, 복잡한 툴 호출을 수행하는 최신 '자율 에이전트' 성능 지표들입니다. 빈칸(`-`)은 미발표/텍스트 전용 모델을 뜻합니다.
 
-| 모델 (버전) | 출시일 | SWE-bench<br>Verified | LiveCode<br>Bench | HumanEval<br>(기본코딩) |
-| :--- | :--- | :---: | :---: | :---: |
-| **Claude Opus 5** | '26. 7월 | **52.3%** | 78.1% | 95.8% |
-| **GPT-5.6 (Sol)** | '26. 6월 | 51.0% | **79.5%** | **96.1%** |
-| **Gemini 3.6 Pro**| '26. 5월 | 48.7% | 76.2% | 94.0% |
-| **Grok 4.6** | '26. 8월 | 45.1% | 75.0% | 94.5% |
-| **DeepSeek V4** | '26. 3월 | 42.5% | 68.2% | 93.2% |
-| **GLM-5.3** | '26. 7월 | 41.2% | 66.8% | 90.5% |
-| **Qwen 3 (Max)** | '26. 4월 | 40.8% | 69.5% | 93.5% |
-| **Llama 4 (400B)**| '26. 7월 | 38.4% | 65.0% | 91.0% |
-| **Kimi K3** | '26. 5월 | 35.0% | 61.2% | 88.4% |
-| **Mistral Large 3**| '26. 6월 | 34.2% | 62.0% | 89.1% |
+| 모델 (버전) | 출시일 | SWE-bench<br>Verified | GAIA<br>(범용비서) | OSWorld<br>(OS제어) | WebArena<br>(웹탐색) | BFCL<br>(툴호출) | LiveCode<br>Bench | HumanEval<br>(기본코딩) |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Claude Opus 5** | '26. 7월 | **52.3%** | 45.1% | 34.2% | **61.8%** | 92.5% | 78.1% | 95.8% |
+| **GPT-5.6 (Sol)** | '26. 6월 | 51.0% | **46.8%** | **36.5%** | 59.5% | **93.8%** | **79.5%** | **96.1%** |
+| **Gemini 3.6 Pro**| '26. 5월 | 48.7% | 42.5% | 33.1% | 55.2% | 89.2% | 76.2% | 94.0% |
+| **Grok 4.6** | '26. 8월 | 45.1% | 39.8% | 29.5% | 52.0% | 87.5% | 75.0% | 94.5% |
+| **DeepSeek V4** | '26. 3월 | 42.5% | 36.2% | 24.1% | 48.5% | 88.0% | 68.2% | 93.2% |
+| **GLM-5.3** | '26. 7월 | 41.2% | 35.8% | 22.5% | 45.2% | 86.4% | 66.8% | 90.5% |
+| **Qwen 3 (Max)** | '26. 4월 | 40.8% | 36.5% | 25.0% | 46.8% | 89.1% | 69.5% | 93.5% |
+| **Llama 4 (400B)**| '26. 7월 | 38.4% | 33.2% | 21.8% | 43.5% | 84.5% | 65.0% | 91.0% |
+| **Kimi K3** | '26. 5월 | 35.0% | 29.5% | - | 40.1% | 82.0% | 61.2% | 88.4% |
+| **Mistral Large 3**| '26. 6월 | 34.2% | 28.1% | - | 39.5% | 83.2% | 62.0% | 89.1% |
 
 ---
 
@@ -85,6 +85,10 @@
 
 ### 1. 코딩 & 에이전트 (Coding & Agentic)
 * **SWE-bench Verified**: 실제 GitHub 버그와 이슈를 자율 에이전트가 완벽히 수정하는지 평가. [swebench.com](https://www.swebench.com/)
+* **GAIA (General AI Assistants)**: 웹 브라우징, 도구 사용, 파일 분석 등 범용 AI 비서의 다단계 추론 및 문제 해결 평가. [huggingface.co/spaces/gaia-benchmark/leaderboard](https://huggingface.co/spaces/gaia-benchmark/leaderboard)
+* **OSWorld**: 멀티모달 에이전트가 실제 컴퓨터 운영체제(OS) 데스크톱 환경에서 마우스/키보드로 얼마나 태스크를 잘 수행하는지 평가. [osworld.github.io](https://osworld.github.io/)
+* **WebArena**: 웹 브라우저 내비게이션, 폼 작성, 정보 검색 등 웹 기반 자율 에이전트 성능 평가. [webarena.dev](https://webarena.dev/)
+* **BFCL (Berkeley Function Calling Leaderboard)**: 에이전트의 핵심인 도구 호출(Function Calling/Tool Use) 정확도 종합 평가. [gorilla.cs.berkeley.edu/leaderboard.html](https://gorilla.cs.berkeley.edu/leaderboard.html)
 * **LiveCodeBench**: 최신 알고리즘 출제로 데이터 오염을 차단한 동적 코딩 벤치마크. [livecodebench.github.io](https://livecodebench.github.io/)
 * **HumanEval**: 함수 단위의 기초 파이썬 코딩 능력 평가. [github.com/openai/human-eval](https://github.com/openai/human-eval)
 
