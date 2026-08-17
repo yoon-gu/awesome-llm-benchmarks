@@ -110,20 +110,13 @@
 
 ---
 
+---
+
 ## 📖 모델별 성능 데이터 출처 (Model Performance Sources)
 
-각 모델의 자체 발표치, 테크니컬 리포트, 그리고 교차 검증을 위한 서드파티 평가 기관(LMSYS, Epoch AI, Hugging Face) 데이터를 취합하여 산정했습니다. (2026년 발표 기준)
+각 셀에 기입된 벤치마크 수치들의 개별 출처(공식 기술 보고서, 리더보드 등)는 데이터 무결성을 위해 별도의 파일로 엄격하게 관리하고 있습니다. 상세한 출처 매핑 정보는 아래 문서를 참고해 주세요.
 
-1. **GPT-5.6 (Sol)**: OpenAI - *"GPT-5.6 Technical Report: Towards AGI in Autonomous Agents"* (2026. 6)
-2. **Claude Opus 5**: Anthropic - *"Claude Opus 5 Model Card: Advancing Reliable Reasoning and Agentic Workflows"* (2026. 7)
-3. **Gemini 3.6 Pro**: Google DeepMind - *"Gemini 3.6: Multi-modal Reasoning at the Edge of Intelligence"* (2026. 5)
-4. **Grok 4.6**: xAI - *"Grok 4.6 Technical Capabilities and Real-time Search Integration"* (2026. 8)
-5. **DeepSeek V4**: DeepSeek AI - *"DeepSeek-V4: Pushing Open-Weight Boundaries in Math and Code"* (2026. 3)
-6. **GLM-5.3**: Zhipu AI - *"GLM-5.3: Scaling Chinese and English General Purpose Agents"* (2026. 7)
-7. **Qwen 3 (Max)**: Alibaba Cloud - *"Qwen3 Technical Report: Multi-modal Scaling and Alignment"* (2026. 4)
-8. **Llama 4 (400B)**: Meta AI - *"The Llama 4 Herd of Models: Open Foundation for Future AI"* (2026. 7)
-9. **Kimi K3**: Moonshot AI - *"Kimi K3: Long-context and Analytical Reasoning Mastery"* (2026. 5)
-10. **Mistral Large 3**: Mistral AI - *"Mistral Large 3: Efficient Frontier Models for Enterprise"* (2026. 6)
+👉 **[SOURCES.md 문서 확인하기](./SOURCES.md)**
 
 ## 기여(Contribution)
 새로운 벤치마크 수치가 발표되면 Issue나 Pull Request를 남겨주세요!
