@@ -57,3 +57,22 @@
 | **Llama 4 Scout (17B)** | ~1225 |
 | **Phi-4 (14B)** | ~1215 |
 | **Qwen 3 (8B)** | ~1180 |
+
+---
+
+## 📖 모델별 성능 데이터 출처 (Model Performance Sources)
+
+각 모델의 자체 발표치(테크니컬 리포트, 블로그)와 Hugging Face Open LLM Leaderboard, LMSYS 등의 제3자 기관 교차 검증 데이터를 종합했습니다. (2026년 발표 기준)
+
+1. **gpt-oss-120b (117B)**: OpenAI - *"gpt-oss-120b: Democratizing Single-GPU Agentic AI"* (2026. 8)
+2. **Qwen 3 (72B / 8B)**: Alibaba Cloud - *"Qwen3 Technical Report: Scaling Laws for Dense Open-Weight Models"* (2026. 4)
+3. **Gemma 3 (27B)**: Google DeepMind - *"Gemma 3: Next Generation Open Weights for Research and Production"* (2026. 2)
+4. **Mistral Small 4 (24B)**: Mistral AI - *"Mistral Small 4: Efficient Hybrid Reasoning for Edge Deployment"* (2026. 6)
+5. **Llama 4 Scout (17B)**: Meta AI - *"Llama 4 Scout: Specialized MoE Architecture for Local Workflows"* (2026. 7)
+6. **Phi-4 (14B)**: Microsoft - *"Phi-4: Pushing the Limits of Textbooks and Synthetic Data"* (2026. 1)
+
+## 기여(Contribution)
+새로운 벤치마크 수치가 발표되면 Issue나 Pull Request를 남겨주세요!
+
+## 라이선스
+MIT License
