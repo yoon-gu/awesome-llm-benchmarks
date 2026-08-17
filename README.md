@@ -9,12 +9,12 @@
 
 ## 🚀 1. 코딩 및 에이전트 성능 (Coding & Agentic Performance)
 
-단순 코딩을 넘어 실제 웹 브라우징, 컴퓨터 OS 제어, 복잡한 툴 호출을 수행하는 최신 '자율 에이전트' 성능 지표들입니다. 빈칸(`-`)은 미발표/텍스트 전용 모델을 뜻합니다.
+단순 코딩을 넘어 실제 웹 브라우징, 컴퓨터 OS 제어, 복잡한 툴 호출을 수행하는 최신 '자율 에이전트' 성능 지표들입니다. 빈칸(`-`)은 공신력 있는 직접 출처에서 동일한 모델·평가 설정·수치를 확인하지 못했음을 뜻합니다.
 
-| 모델 (버전) | 출시일 | SWE-bench<br>Verified | GAIA<br>(범용비서) | OSWorld<br>(OS제어) | WebArena<br>(웹탐색) | Tau²-Bench<br>(규정준수) | BFCL<br>(툴호출) | LiveCode<br>Bench | HumanEval<br>(기본코딩) |
+| 모델 (버전) | 출시일 | SWE-bench<br>Verified | GAIA<br>(범용비서) | OSWorld 2.0<br>(Partial) | WebArena<br>(웹탐색) | Tau²-Bench<br>(규정준수) | BFCL<br>(툴호출) | LiveCode<br>Bench | HumanEval<br>(기본코딩) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Claude Opus 5** | '26. 7월 | **52.3%** | - | - | **61.8%** | - | - | - | - |
-| **GPT-5.6 (Sol)** | '26. 6월 | - | **46.8%** | **36.5%** | - | **71.2%** | **93.8%** | **79.5%** | **96.1%** |
+| **Claude Opus 5** | '26. 7월 | **96.0%** | - | - | - | - | - | - | - |
+| **GPT-5.6 (Sol)** | '26. 7월 | - | - | **62.6%** | - | - | - | - | - |
 | **Gemini 3.6 Pro**| '26. 5월 | - | - | - | - | - | - | - | - |
 | **Grok 4.6** | '26. 8월 | - | - | - | - | - | - | - | - |
 | **DeepSeek V4** | '26. 3월 | - | - | - | - | - | - | - | - |
@@ -47,7 +47,7 @@
 
 ## 📐 3. 수학 및 비전 성능 (Math & Vision Performance)
 
-심화 수학 문제 해결 능력과 대학 전공 수준의 시각(멀티모달) 이해도입니다. 빈칸(`-`)은 미발표/텍스트 전용 모델을 뜻합니다.
+심화 수학 문제 해결 능력과 대학 전공 수준의 시각(멀티모달) 이해도입니다. 빈칸(`-`)은 공신력 있는 직접 출처에서 동일한 모델·평가 설정·수치를 확인하지 못했음을 뜻합니다.
 
 | 모델 (버전) | MATH<br>(심화수학) | GSM8K<br>(기본수학) | MMMU<br>(전공비전) | MathVista<br>(비전수학) |
 | :--- | :---: | :---: | :---: | :---: |
@@ -86,9 +86,9 @@
 ### 1. 코딩 & 에이전트 (Coding & Agentic)
 * **SWE-bench Verified**: 실제 GitHub 버그와 이슈를 자율 에이전트가 완벽히 수정하는지 평가. [swebench.com](https://www.swebench.com/)
 * **GAIA (General AI Assistants)**: 웹 브라우징, 도구 사용, 파일 분석 등 범용 AI 비서의 다단계 추론 및 문제 해결 평가. [huggingface.co/spaces/gaia-benchmark/leaderboard](https://huggingface.co/spaces/gaia-benchmark/leaderboard)
-* **OSWorld**: 멀티모달 에이전트가 실제 컴퓨터 운영체제(OS) 데스크톱 환경에서 마우스/키보드로 얼마나 태스크를 잘 수행하는지 평가. [osworld.github.io](https://osworld.github.io/)
+* **OSWorld 2.0**: 멀티모달 에이전트가 장시간 실제 컴퓨터 작업을 얼마나 완수하는지 평가. 이 문서의 수치는 부분 완료 점수(Partial reward)를 사용합니다. [osworld-v2.xlang.ai](https://osworld-v2.xlang.ai/)
 * **WebArena**: 웹 브라우저 내비게이션, 폼 작성, 정보 검색 등 웹 기반 자율 에이전트 성능 평가. [webarena.dev](https://webarena.dev/)
-* **Tau²-Bench**: 모의 사용자와 상호작용하며 특정 도메인(예: 리테일, 항공)의 규정과 정책(Policy)을 에이전트가 얼마나 엄격히 준수하는지 평가하는 최신 벤치마크. [github.com/sierra-research/tau-bench](https://github.com/sierra-research/tau-bench)
+* **Tau²-Bench**: 모의 사용자와 상호작용하며 특정 도메인(예: 리테일, 항공)의 규정과 정책(Policy)을 에이전트가 얼마나 엄격히 준수하는지 평가하는 벤치마크. [공식 리더보드](https://taubench.com/leaderboard?benchmark=core) · [공식 저장소](https://github.com/sierra-research/tau2-bench)
 * **BFCL (Berkeley Function Calling Leaderboard)**: 에이전트의 핵심인 도구 호출(Function Calling/Tool Use) 정확도 종합 평가. [gorilla.cs.berkeley.edu/leaderboard.html](https://gorilla.cs.berkeley.edu/leaderboard.html)
 * **LiveCodeBench**: 최신 알고리즘 출제로 데이터 오염을 차단한 동적 코딩 벤치마크. [livecodebench.github.io](https://livecodebench.github.io/)
 * **HumanEval**: 함수 단위의 기초 파이썬 코딩 능력 평가. [github.com/openai/human-eval](https://github.com/openai/human-eval)
