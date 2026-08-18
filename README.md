@@ -1,125 +1,122 @@
-# Awesome LLM Benchmarks (2026)
+# Awesome LLM Benchmarks (2025–2026 검증판)
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-2026년 최신 LLM(대형 언어 모델)의 벤치마크 성능과 공식 출처를 모아둔 저장소입니다. 최근 AI 업계에서 가장 중요시되는 **자율 에이전트(Agentic)** 성능을 필두로, 분야별(에이전트, 추론, 수학, 비전)로 프론티어(Frontier) 모델과 오픈웨이트(Open-Weight) 모델의 실질적인 성능을 오염 방지(Contamination-free) 및 고난도 지표 중심으로 간결하게 분리하여 정리했습니다.
+공식 벤치마크 운영자 리더보드와 모델 제공사의 공식 시스템 카드·기술 보고서에서 직접 확인한 LLM 성능값을 정리합니다. **검증 기준일은 2026-08-18 (KST)** 입니다.
+
+`-`는 0점이 아니라 동일한 모델·벤치마크·평가 설정의 공개 수치를 확인하지 못했다는 뜻입니다. 같은 열에서도 하네스, 도구 사용, 시행 횟수, 추론 강도가 다를 수 있으므로 셀의 짧은 설정 표기와 [SOURCES.md](./SOURCES.md)를 함께 확인해 주세요.
 
 ---
 
 ## 🚀 1. 코딩 및 에이전트 성능 (Coding & Agentic Performance)
 
-단순 코딩을 넘어 실제 웹 브라우징, 컴퓨터 OS 제어, 복잡한 툴 호출을 수행하는 최신 '자율 에이전트' 성능 지표들입니다. 빈칸(`-`)은 공신력 있는 직접 출처에서 동일한 모델·평가 설정·수치를 확인하지 못했음을 뜻합니다.
-
-| 모델 (버전) | 출시일 | SWE-bench<br>Verified | GAIA<br>(범용비서) | OSWorld 2.0<br>(Partial) | WebArena<br>(웹탐색) | Tau²-Bench<br>(규정준수) | BFCL<br>(툴호출) | LiveCode<br>Bench | HumanEval<br>(기본코딩) |
+| 모델 (정확한 버전) | 출시일 | SWE-bench<br>Verified | GAIA | OSWorld 2.0 | WebArena | τ²-Bench | BFCL V4 | LiveCodeBench | HumanEval |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Claude Opus 5** | '26. 7월 | **96.0%** | - | - | - | - | - | - | - |
-| **GPT-5.6 (Sol)** | '26. 7월 | - | - | **62.6%** | - | - | - | - | - |
-| **Gemini 3.6 Pro**| '26. 5월 | - | - | - | - | - | - | - | - |
+| **Claude Opus 5** | '26. 7월 | **96.0%**<br><sub>vendor · 5회 평균</sub> | - | **70.6%**<br><sub>success@1</sub> | - | - | - | - | - |
+| **GPT-5.6 Sol** | '26. 7월 | - | - | **62.6%**<br><sub>Partial reward</sub> | - | - | - | - | - |
+| **Gemini 3.1 Pro Preview** | '26. 2월 | **80.6%**<br><sub>Thinking High · 1회</sub> | - | - | - | **Retail 90.8%**<br>**Telecom 99.3%** | - | - | - |
 | **Grok 4.6** | '26. 8월 | - | - | - | - | - | - | - | - |
-| **DeepSeek V4** | '26. 3월 | - | - | - | - | - | - | - | - |
-| **GLM-5.3** | '26. 7월 | - | - | - | - | - | - | - | - |
-| **Qwen 3 (Max)** | '26. 4월 | - | - | - | - | - | - | - | - |
-| **Llama 4 (400B)**| '26. 7월 | - | - | - | - | - | - | - | - |
-| **Kimi K3** | '26. 5월 | - | - | - | - | - | - | - | - |
-| **Mistral Large 3**| '26. 6월 | - | - | - | - | - | - | - | - |
+| **DeepSeek-V4-Pro (Max)** | '26. 4월<sub> preview</sub> | **80.6%**<br><sub>vendor harness</sub> | - | - | - | - | - | **93.5%**<br><sub>v6 · pass@1-CoT</sub> | - |
+| **GLM-5.3** | '26. 8월 | - | - | - | - | - | - | - | - |
+| **Qwen3-Max-Thinking** | '26. 1월 | **75.3%**<br><sub>vendor harness</sub> | - | - | - | **82.1%**<br><sub>official setting</sub> | **67.7%**<br><sub>최대 100 turns</sub> | **85.9%**<br><sub>v6</sub> | - |
+| **Llama 4 Maverick 17B-128E Instruct** | '25. 4월 | - | - | - | - | - | - | **43.4%**<br><sub>0-shot pass@1</sub> | - |
+| **Kimi K3 (Max)** | '26. 7월 | - | - | - | - | - | - | - | - |
+| **Mistral Large 3 Base (675B)** | '25. 12월 | - | - | - | - | - | - | - | - |
+| **Mistral Large 3 Instruct (675B)** | '25. 12월 | - | - | - | - | - | - | - | - |
 
 ---
 
 ## 🧠 2. 지식 및 추론 성능 (Knowledge & Reasoning Performance)
 
-박사급 초고난도 추론 및 다방면의 일반 지식 평가입니다.
+HLE는 도구 사용 여부와 Full/Text subset을 셀에 표시합니다. 서로 다른 설정의 값은 직접 비교하면 안 됩니다.
 
-| 모델 (버전) | GPQA<br>Diamond | HLE<br>(최고난이도) | MMLU<br>(일반지식) | MMLU-Pro<br>(심화지식) |
+| 모델 (정확한 버전) | GPQA Diamond | HLE | MMLU | MMLU-Pro |
 | :--- | :---: | :---: | :---: | :---: |
-| **Claude Opus 5** | - | - | - | - |
-| **GPT-5.6 (Sol)** | - | - | - | - |
-| **Gemini 3.6 Pro**| - | - | - | - |
+| **Claude Opus 5** | - | **56.3%** <sub>no tools</sub><br>**64.7%** <sub>tools</sub> | - | - |
+| **GPT-5.6 Sol** | - | - | - | - |
+| **Gemini 3.1 Pro Preview** | **94.3%**<br><sub>Thinking High · no tools</sub> | **44.4%** <sub>no tools</sub><br>**51.4%** <sub>Search+Code</sub> | - | - |
 | **Grok 4.6** | - | - | - | - |
-| **DeepSeek V4** | - | - | - | - |
-| **Qwen 3 (Max)** | - | - | - | - |
-| **Llama 4 (400B)**| - | - | - | - |
-| **GLM-5.3** | - | - | - | - |
-| **Kimi K3** | - | - | - | - |
-| **Mistral Large 3**| - | - | - | - |
+| **DeepSeek-V4-Pro (Max)** | **90.1%**<br><sub>pass@1</sub> | **37.7%** <sub>no tools</sub><br>**48.2%** <sub>tools</sub> | - | **87.5%**<br><sub>EM</sub> |
+| **GLM-5.3** | - | **62.5%**<br><sub>with tools</sub> | - | - |
+| **Qwen3-Max-Thinking** | - | **30.2%** <sub>text subset</sub><br>**49.8%** <sub>tools</sub> | - | **85.7%** |
+| **Llama 4 Maverick 17B-128E Instruct** | **69.8%**<br><sub>0-shot</sub> | - | - | **80.5%**<br><sub>0-shot</sub> |
+| **Kimi K3 (Max)** | **93.5%** | **43.5%** <sub>Full · no tools</sub><br>**56.0%** <sub>tools</sub> | - | - |
+| **Mistral Large 3 Base (675B)** | **43.9%**<br><sub>5-shot · no CoT</sub> | - | - | - |
+| **Mistral Large 3 Instruct (675B)** | - | - | - | - |
 
 ---
 
 ## 📐 3. 수학 및 비전 성능 (Math & Vision Performance)
 
-심화 수학 문제 해결 능력과 대학 전공 수준의 시각(멀티모달) 이해도입니다. 빈칸(`-`)은 공신력 있는 직접 출처에서 동일한 모델·평가 설정·수치를 확인하지 못했음을 뜻합니다.
-
-| 모델 (버전) | MATH<br>(심화수학) | GSM8K<br>(기본수학) | MMMU<br>(전공비전) | MathVista<br>(비전수학) |
+| 모델 (정확한 버전) | MATH | GSM8K | MMMU | MathVista |
 | :--- | :---: | :---: | :---: | :---: |
-| **GPT-5.6 (Sol)** | - | - | - | - |
 | **Claude Opus 5** | - | - | - | - |
+| **GPT-5.6 Sol** | - | - | - | - |
+| **Gemini 3.1 Pro Preview** | - | - | - | - |
 | **Grok 4.6** | - | - | - | - |
-| **Gemini 3.6 Pro**| - | - | - | - |
-| **Qwen 3 (Max)** | - | - | - | - |
-| **DeepSeek V4** | - | - | - | - |
-| **Llama 4 (400B)**| - | - | - | - |
+| **DeepSeek-V4-Pro (Max)** | - | - | - | - |
 | **GLM-5.3** | - | - | - | - |
-| **Mistral Large 3**| - | - | - | - |
-| **Kimi K3** | - | - | - | - |
+| **Qwen3-Max-Thinking** | - | - | - | - |
+| **Llama 4 Maverick 17B-128E Instruct** | - | - | **73.4%**<br><sub>0-shot</sub> | **73.7%**<br><sub>0-shot</sub> |
+| **Kimi K3 (Max)** | - | - | - | - |
+| **Mistral Large 3 Base (675B)** | - | - | - | - |
+| **Mistral Large 3 Instruct (675B)** | - | - | - | - |
 
 ---
 
-## 🏆 4. 체감 성능 (Human Preference)
+## 🏆 4. 인간 선호도 (Human Preference)
 
-| 모델 (버전) | LMSYS Chatbot Arena Elo (추정치) |
+아래 값은 Arena의 **Text Overall / Style Control** 2026-08-12 스냅샷 rating을 반올림한 값입니다. 고전적인 단일 “LMSYS Elo”로 해석하지 않습니다.
+
+| 모델 (정확한 Arena key 기준) | Arena rating |
 | :--- | :---: |
-| **GPT-5.6 (Sol)** | - |
-| **Claude Opus 5** | - |
-| **Gemini 3.6 Pro**| - |
-| **Grok 4.6** | - |
-| **DeepSeek V4** | - |
-| **Qwen 3 (Max)** | - |
-| **Llama 4 (400B)**| - |
+| **Claude Opus 5** | **1493** <sub>high</sub><br>**1489** <sub>max</sub> |
+| **GPT-5.6 Sol** | **1481** <sub>xhigh</sub> |
+| **Gemini 3.1 Pro Preview** | **1486** |
+| **Grok 4.6** | **1464** <sub>high</sub> |
+| **DeepSeek-V4-Pro (Max)** | - |
 | **GLM-5.3** | - |
-| **Kimi K3** | - |
-| **Mistral Large 3**| - |
+| **Qwen3-Max-Thinking** | - |
+| **Llama 4 Maverick 17B-128E Instruct** | **1327** |
+| **Kimi K3 (Max)** | **1489** |
+| **Mistral Large 3 Base (675B)** | - |
+| **Mistral Large 3 Instruct (675B)** | **1415** |
 
 ---
 
 ## 🔗 벤치마크 공식 URL 및 설명
 
-### 1. 코딩 & 에이전트 (Coding & Agentic)
-* **SWE-bench Verified**: 실제 GitHub 버그와 이슈를 자율 에이전트가 완벽히 수정하는지 평가. [swebench.com](https://www.swebench.com/)
-* **GAIA (General AI Assistants)**: 웹 브라우징, 도구 사용, 파일 분석 등 범용 AI 비서의 다단계 추론 및 문제 해결 평가. [huggingface.co/spaces/gaia-benchmark/leaderboard](https://huggingface.co/spaces/gaia-benchmark/leaderboard)
-* **OSWorld 2.0**: 멀티모달 에이전트가 장시간 실제 컴퓨터 작업을 얼마나 완수하는지 평가. 이 문서의 수치는 부분 완료 점수(Partial reward)를 사용합니다. [osworld-v2.xlang.ai](https://osworld-v2.xlang.ai/)
-* **WebArena**: 웹 브라우저 내비게이션, 폼 작성, 정보 검색 등 웹 기반 자율 에이전트 성능 평가. [webarena.dev](https://webarena.dev/)
-* **Tau²-Bench**: 모의 사용자와 상호작용하며 특정 도메인(예: 리테일, 항공)의 규정과 정책(Policy)을 에이전트가 얼마나 엄격히 준수하는지 평가하는 벤치마크. [공식 리더보드](https://taubench.com/leaderboard?benchmark=core) · [공식 저장소](https://github.com/sierra-research/tau2-bench)
-* **BFCL (Berkeley Function Calling Leaderboard)**: 에이전트의 핵심인 도구 호출(Function Calling/Tool Use) 정확도 종합 평가. [gorilla.cs.berkeley.edu/leaderboard.html](https://gorilla.cs.berkeley.edu/leaderboard.html)
-* **LiveCodeBench**: 최신 알고리즘 출제로 데이터 오염을 차단한 동적 코딩 벤치마크. [livecodebench.github.io](https://livecodebench.github.io/)
-* **HumanEval**: 함수 단위의 기초 파이썬 코딩 능력 평가. [github.com/openai/human-eval](https://github.com/openai/human-eval)
+### 코딩 & 에이전트
 
-### 2. 지식 & 추론 (Knowledge & Reasoning)
-* **GPQA Diamond**: 물리/화학/생물 등 박사급 초고난도 객관식 추론 평가. [github.com/idavidrein/gpqa](https://github.com/idavidrein/gpqa)
-* **HLE (Humanity's Last Exam)**: 가장 까다롭게 설계된 최상위 지능 테스트. [scale.com/leaderboard/hle](https://scale.com/leaderboard/hle)
-* **MMLU**: 57개 학문 분야 객관식 지식 평가 (최상위 90% 돌파로 변별력 감소). [github.com/hendrycks/test](https://github.com/hendrycks/test)
-* **MMLU-Pro**: 선택지가 10개로 늘어나고 난이도가 높아진 심화 추론 지식 테스트. [huggingface.co/datasets/TIGER-Lab/MMLU-Pro](https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro)
+* **SWE-bench Verified**: 실제 GitHub 이슈 수정 평가. [공식 사이트](https://www.swebench.com/) · [운영자 실험 저장소](https://github.com/swe-bench/experiments)
+* **GAIA**: 웹 탐색·도구 사용·파일 분석을 포함한 범용 비서 평가. [공식 리더보드](https://huggingface.co/spaces/gaia-benchmark/leaderboard) · [공개 결과 데이터](https://huggingface.co/datasets/gaia-benchmark/results_public)
+* **OSWorld 2.0**: 실제 컴퓨터 작업 수행 평가. [공식 프로젝트](https://osworld-v2.xlang.ai/) · [공식 결과 JSON](https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json)
+* **WebArena**: 실제 웹사이트 환경의 자율 에이전트 평가. [원 벤치마크](https://webarena.dev/og/) · [공식 리더보드](https://docs.google.com/spreadsheets/d/1M801lEpBbKSNwP-vDBkC_pF7LdyGU1f_ufZb_NWNBZQ/edit?usp=sharing)
+* **τ²-Bench**: 도메인 정책을 지키며 사용자와 상호작용하는 에이전트 평가. [공식 리더보드](https://taubench.com/leaderboard?benchmark=core) · [공식 저장소](https://github.com/sierra-research/tau2-bench)
+* **BFCL V4**: 함수·도구 호출 정확도 평가. [공식 리더보드](https://gorilla.cs.berkeley.edu/leaderboard.html) · [공식 결과 CSV](https://gorilla.cs.berkeley.edu/data_overall.csv)
+* **LiveCodeBench**: 시간 순서로 오염을 줄인 동적 코딩 평가. [공식 리더보드](https://livecodebench.github.io/leaderboard.html) · [공식 결과 JSON](https://livecodebench.github.io/performances_generation.json)
+* **HumanEval**: 함수 단위 Python 코딩 평가. [OpenAI 공식 저장소](https://github.com/openai/human-eval) — 공식 중앙 리더보드는 없습니다.
 
-### 3. 수학 & 비전 (Math & Vision)
-* **MATH**: 경시대회 수준의 중고급 수학 문제 해결력 평가. [github.com/hendrycks/math](https://github.com/hendrycks/math)
-* **GSM8K**: 초등학교 수준의 다단계 수학 문장제. [github.com/openai/grade-school-math](https://github.com/openai/grade-school-math)
-* **MMMU**: 도표, 악보 등 대학 전공 수준의 시각 자료 이해도 평가. [mmmu-benchmark.github.io](https://mmmu-benchmark.github.io/)
-* **MathVista**: 기하학 도형, 그래프 등 시각적 수학 추론 문제 평가. [mathvista.github.io](https://mathvista.github.io/)
+### 지식·추론·수학·비전
 
-### 4. 인간 선호도 (Human Preference)
-* **LMSYS Chatbot Arena Elo**: 실제 사용자들의 블라인드 투표로 랭킹을 매기는 체감 성능 지표. [chat.lmsys.org](https://chat.lmsys.org/)
+* **GPQA Diamond**: 박사급 과학 객관식 추론 평가. [공식 저장소](https://github.com/idavidrein/gpqa)
+* **HLE (Humanity's Last Exam)**: 고난도 종합 지능 평가. [공식 프로젝트](https://lastexam.ai/)
+* **MMLU / MMLU-Pro**: 다학문 일반 지식 및 심화 추론 평가. [MMLU](https://github.com/hendrycks/test) · [MMLU-Pro](https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro)
+* **MATH / GSM8K**: 수학 문제 해결 평가. [MATH](https://github.com/hendrycks/math) · [GSM8K](https://github.com/openai/grade-school-math)
+* **MMMU / MathVista**: 대학 전공 시각 이해 및 시각 수학 추론 평가. [MMMU](https://mmmu-benchmark.github.io/) · [MathVista](https://mathvista.github.io/)
+* **Arena Text Overall**: 사용자 블라인드 투표 기반 선호도 평가. [공식 Text 리더보드](https://arena.ai/leaderboard/text)
 
 ---
 
----
+## 📖 모델별 성능 데이터 출처
 
-## 📖 모델별 성능 데이터 출처 (Model Performance Sources)
+각 숫자의 모델 변형, 지표, 도구 설정, 출처 유형과 확인 상태는 [SOURCES.md](./SOURCES.md)에 기록합니다. 120B 이하 오픈웨이트 모델 표는 [small_models_2026.md](./small_models_2026.md)에서 확인할 수 있습니다.
 
-각 셀에 기입된 벤치마크 수치들의 개별 출처(공식 기술 보고서, 리더보드 등)는 데이터 무결성을 위해 별도의 파일로 엄격하게 관리하고 있습니다. 상세한 출처 매핑 정보는 아래 문서를 참고해 주세요.
+## 기여
 
-👉 **[SOURCES.md 문서 확인하기](./SOURCES.md)**
-
-## 기여(Contribution)
-새로운 벤치마크 수치가 발표되면 Issue나 Pull Request를 남겨주세요!
+새로운 수치를 추가할 때는 모델명과 점수가 함께 표시된 공식 URL, 벤치마크 버전, 평가 설정을 포함해 Issue 또는 Pull Request를 남겨 주세요.
 
 ## 라이선스
+
 MIT License
