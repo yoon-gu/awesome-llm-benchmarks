@@ -1,168 +1,178 @@
-# 성능 수치 출처 (Performance Result Provenance)
+# Benchmark Result Provenance
 
-검증 기준일: **2026-08-18 (KST)**
+검증 기준일: **2026-08-19 (KST)**
 
-이 문서는 `README.md`와 `small_models_2026.md`의 숫자 셀을 역추적합니다. 모델 소개 페이지를 여러 지표의 포괄 출처로 간주하지 않고, 모델명·벤치마크·수치가 함께 표시된 1차 자료만 채택합니다.
+README.md와 small_models_2026.md를 기존 값에서 이어 고치지 않고, 추적 대상 19개의 공식 원문을 Browser에서 다시 열어 처음부터 재구성했습니다. 모델명·benchmark variant·수치가 함께 표시된 모델 제공사의 공식 카드·기술 보고서·평가 발표만 점수 근거로 채택했습니다.
 
-## 채택 기준과 근거 등급
+## 검증 규칙
 
-- **operator-collected**: 벤치마크 운영자가 직접 수집한 블라인드 투표 또는 공식 제출 결과입니다.
-- **operator-evaluated**: 운영자가 공개 하네스로 실행·채점한 결과입니다.
-- **vendor-reported**: 모델 제공사가 공식 시스템 카드·모델 카드·기술 보고서에 공개한 자체 평가입니다.
-- `-`는 0점이나 기능 부재가 아니라, 동일 모델·지표·설정의 채택 가능한 공개 수치를 찾지 못했다는 뜻입니다.
-- 개발사 평가와 운영자 평가는 하네스, 도구, 샘플링, 추론 강도, 시행 횟수가 다를 수 있으므로 같은 열의 숫자도 자동으로 직접 비교하지 않습니다.
+- **vendor-reported**: 모델 제공사의 공식 모델 카드, 시스템 카드, 기술 보고서 또는 공식 평가 발표에 실린 값.
+- **vendor-reported / reproducible**: 위 조건에 더해 공식 실행 recipe·harness·반복 설정이 공개된 값.
+- **partial config**: 모델과 정확한 benchmark 이름·값은 확인했지만 shot, tools, pass@k, trials, decoding 또는 scaffold 일부가 미공개.
+- `Verified`, `Pro`, `Multilingual`, `v3/v4/v5/v6`, `MMMU/MMMU-Pro`, `τ²/τ³`처럼 이름이 다르면 별도 benchmark로 취급.
+- agent scaffold가 있으면 bare-model 결과로 바꾸지 않고 `model + scaffold`로 기록.
+- 모델 카드의 경쟁 모델 비교열은 사용하지 않고 **해당 카드 소유자의 정확한 모델 열**만 추출. 예외는 Qwen3.6-35B의 GPQA variant 확인처럼 동일 공급사의 후속 공식 카드가 행명을 더 정확히 밝힌 경우뿐이며 이를 명시.
+- 일반 권장 sampling 값을 개별 benchmark 설정으로 소급하지 않음.
 
 ## 확인 통계
 
-| 구분 | 채운 셀 | 빈 셀 | 전체 셀 | 채움률 |
+| 범위 | Browser에서 공식 원문 확인 | 공통 비교 채움 | 공통 비교 미확인 | 채움률 |
 | :--- | ---: | ---: | ---: | ---: |
-| 프론티어 모델 (`README.md`, 11×17) | **35** | 152 | 187 | **18.72%** |
-| 120B 이하 오픈웨이트 (`small_models_2026.md`, 6×17) | **35** | 67 | 102 | **34.31%** |
-| **합계** | **70** | **219** | **289** | **24.22%** |
+| 프론티어 4개 모델, 11개 열 | **4/4** | **27/44** | 17/44 | **61.36%** |
+| 공개 가중치 15개, 13개 열 | **15/15** | **70/195** | 125/195 | **35.90%** |
+| **합계** | **19/19** | **97/239** | **142/239** | **40.59%** |
 
-한 셀에 도구 사용 여부나 서로 다른 공식 하네스 결과를 함께 표시한 경우가 있어, 70개 셀에는 **80개의 숫자 주장**이 들어 있습니다. 운영자 근거가 포함된 것은 **17셀 / 18개 주장**이고, `vendor-reported` 주장은 **62개**입니다. 53개 셀은 개발사 근거만 가지며, gpt-oss SWE 셀 하나는 vendor와 operator 결과를 함께 표시합니다. 조사 전 채움률은 2/289셀(0.69%)이었습니다.
+추가·전문화 표의 수치는 version과 subset이 달라 공통 행렬 분모에서 제외했습니다. 공통 표에서는 19개 모델 전체가 빈 benchmark 열을 제거했습니다.
 
-## 모델명·출시일 교정
+외부 링크는 fragment를 제거해 중복을 합친 **111개**를 검사했습니다. 109개는 HTTP 2xx로 확인했고, 자동 요청에 403을 반환한 OpenAI preview·GA 발표 2개는 인앱 Browser에서 정상 렌더링을 직접 확인해 **111/111 접근 가능**으로 판정했습니다.
 
-| 기존 표기 | 교정 결과 | 1차 근거 |
+## 모델 신원과 Browser 확인 원문
+
+| 구분 | 정확한 모델/체크포인트 | 공개일 | Browser 확인 원문 | 카드/보고서 상태 |
+| :--- | :--- | :---: | :--- | :--- |
+| Frontier | Claude Opus 5 (`claude-opus-5`) | 2026-07-24 | [Anthropic 발표](https://www.anthropic.com/news/claude-opus-5) · [System Card landing](https://www.anthropic.com/claude-opus-5-system-card) · [고정 PDF](https://www-cdn.anthropic.com/b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude%20Opus%205%20System%20Card.pdf) | 공식 System Card 확인 |
+| Frontier | GPT-5.6 Sol (`gpt-5.6-sol`) | 2026-07-09 GA | [6/26 preview](https://openai.com/index/previewing-gpt-5-6-sol/) · [7/9 발표·평가표](https://openai.com/index/gpt-5-6/) · [System Card](https://deploymentsafety.openai.com/gpt-5-6) · [고정 PDF](https://deploymentsafety.openai.com/gpt-5-6/gpt-5-6.pdf) · [API 문서](https://developers.openai.com/api/docs/models/gpt-5.6-sol) | 발표 표와 System Card 확인 |
+| Frontier | Gemini 3.1 Pro Preview (`gemini-3.1-pro-preview`) | 2026-02-19 | [DeepMind Model Card](https://deepmind.google/models/model-cards/gemini-3-1-pro/) · [고정 Model Card PDF](https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf) · [평가 방법론 PDF](https://storage.googleapis.com/deepmind-media/gemini/gemini_3-1_pro_model_evaluation.pdf) | 공식 카드·방법론 확인 |
+| Frontier | Grok 4.6 (`grok-4.6`) | 2026-08-12 | [xAI 발표·평가표](https://x.ai/news/grok-4-6) · [모델 문서](https://docs.x.ai/developers/models/grok-4.6) | 별도 공식 model card/tech report는 2026-08-19 현재 발견하지 못함 |
+| Open weight | `google/gemma-4-31B-it` | 2026-04-02 | [고정 카드](https://huggingface.co/google/gemma-4-31B-it/blob/842da3794eaa0b77d5f08bae87a17459d91ff475/README.md) · [Google 출시](https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/) · [기술 보고서 v2](https://arxiv.org/html/2607.02770v2) | owner card/report 확인 |
+| Open weight | `LGAI-EXAONE/EXAONE-4.5-33B` | 2026-04-09 | [고정 카드](https://huggingface.co/LGAI-EXAONE/EXAONE-4.5-33B/blob/570aa4b15a4f45ba1133072b45f50198f6e3b4fd/README.md) · [LG 출시](https://www.lgresearch.ai/blog/view?seq=641) · [기술 보고서](https://arxiv.org/html/2604.08644v1) | owner card/report 확인 |
+| Open weight | `Qwen/Qwen3.6-35B-A3B` | 2026-04-15 | [고정 카드](https://huggingface.co/Qwen/Qwen3.6-35B-A3B/blob/995ad96eacd98c81ed38be0c5b274b04031597b0/README.md) · [Qwen 출시](https://qwen.ai/blog?id=qwen3.6-35b-a3b) | owner card/blog 확인 |
+| Open weight | `Qwen/Qwen3.6-27B` | 2026-04-22 | [고정 카드](https://huggingface.co/Qwen/Qwen3.6-27B/blob/6a9e13bd6fc8f0983b9b99948120bc37f49c13e9/README.md) · [Qwen 출시](https://qwen.ai/blog?id=qwen3.6-27b) | owner card/blog 확인 |
+| Open weight | `nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16` | 2026-04-28 | [고정 카드](https://huggingface.co/nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16/blob/24e67ea000b7c2837fc8f9488aa2008524fac8ba/README.md) · [기술 보고서](https://arxiv.org/html/2604.24954v2) | owner card/report 확인 |
+| Open weight | `ibm-granite/granite-4.1-30b` | 2026-04-29 | [고정 카드](https://huggingface.co/ibm-granite/granite-4.1-30b/blob/4fae6278f7132abf5e971f9de49ebbad09c54cce/README.md) · [IBM 출시](https://research.ibm.com/blog/granite-4-1-ai-foundation-models) | owner card 확인 |
+| Open weight | `openbmb/MiniCPM5-1B` | 2026-05-19 | [고정 카드](https://huggingface.co/openbmb/MiniCPM5-1B/blob/87179e5c1f455ef22e6223592d2d61351b525bfc/README.md) · [공식 changelog](https://github.com/OpenBMB/MiniCPM/blob/719e4fcfabff9b9c16f179c3f2986dfbd6c6047f/README.md) · [결과 이미지](https://raw.githubusercontent.com/OpenBMB/MiniCPM/719e4fcfabff9b9c16f179c3f2986dfbd6c6047f/assets/minicpm5/public_leaderboard_en.png) | owner card/image 확인 |
+| Open weight | `tencent/Hy-MT2-30B-A3B` | 2026-05-21 | [고정 카드](https://huggingface.co/tencent/Hy-MT2-30B-A3B/blob/d3ead4dba61c09aac60a261a96ad1df3e705febb/README.md) · [기술 보고서](https://arxiv.org/html/2605.22064v2) · [결과 이미지](https://huggingface.co/tencent/Hy-MT2-30B-A3B/resolve/d3ead4dba61c09aac60a261a96ad1df3e705febb/imgs/main_result.png) | owner card/report 확인 |
+| Open weight | `CohereLabs/North-Mini-Code-1.0` | 2026-06-09 | [고정 카드](https://huggingface.co/CohereLabs/North-Mini-Code-1.0/blob/d11e61a842617a22dc328552fa5bb86231ee4f37/README.md) · [Cohere 발표](https://cohere.com/blog/north-mini-code) · [기술 글](https://huggingface.co/blog/CohereLabs/introducing-north-mini-code) · [결과 이미지](https://cdn-uploads.huggingface.co/production/uploads/62668f725fb8d521d94d8451/xR7kZ3X9RKEZrbgD6hpG1.png) | owner card/blog/image 확인 |
+| Open weight | `google/diffusiongemma-26B-A4B-it` | 2026-06-10 | [고정 카드](https://huggingface.co/google/diffusiongemma-26B-A4B-it/blob/f7f5b7f5fa82ffc52addd066915886d497f5517b/README.md) · [Google 출시](https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/) | owner card/blog 확인 |
+| Open weight | `inclusionAI/LLaDA2.2-flash` | 2026-07-16 | [고정 카드](https://huggingface.co/inclusionAI/LLaDA2.2-flash/blob/ee56264534721014d8e651293543f6dc3fcb1f9c/README.md) · [고정 기술 보고서 PDF](https://raw.githubusercontent.com/inclusionAI/LLaDA2.X/f402f0b52817e1c3586a024ebf89e69ad8ca5523/LLaDA2_2_tech_report.pdf) | owner card/report 확인 |
+| Open weight | `LiquidAI/LFM2.5-2.6B` | 2026-08-04 | [고정 카드](https://huggingface.co/LiquidAI/LFM2.5-2.6B/blob/ab00687315bc1298e9d54e9c4b611dde9867ccc2/README.md) · [Liquid 출시](https://www.liquid.ai/blog/lfm2-5-2-6b) | owner card/blog 확인 |
+| Open weight | `inclusionAI/Ling-3.0-tiny` | 2026-08-10 | [고정 카드](https://huggingface.co/inclusionAI/Ling-3.0-tiny/blob/2f9b5474a86ecfe63cfc95f5c87ddb3a745bfe2d/README.md) · [결과 이미지](https://cdn-uploads.huggingface.co/production/uploads/6502cf8fbdaeae26417cd3c9/g9Thw4ohjkDGYw0Cq7mKi.png) | owner card/image 확인 |
+| Open weight | `nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16` | 2026-08-11 | [고정 카드](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16/blob/d468880b6ad3c6e0d21377ce7242adaea4cc884d/README.md) · [고정 reproducibility index](https://github.com/NVIDIA-NeMo/Gym/blob/a62c30035519f738e583b6c1f08254cde70ced1b/nemotron_recipes/lightning-3.5/reproducibility.md) | owner card + runnable recipes 확인 |
+| Open weight | `Qwen/Qwen3.8-27B` | 2026-08-13 weight commit | [고정 카드](https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md) · [첫 전체 weight 커밋](https://huggingface.co/Qwen/Qwen3.8-27B/commit/72a217afab8029b39e4af1c7273a829995a3dbaf) | owner card/weights 확인 |
+
+### 정확한 artifact 파라미터 수의 산출 근거
+
+small_models_2026.md의 `artifact` 정수는 아래 고정 revision의 Hugging Face API 응답에 있는 `safetensors.total`을 사용했습니다. 공식 반올림 규모와 active/effective 수는 각 owner model card를 따릅니다.
+
+| 체크포인트 | 고정 HF metadata (`safetensors.total`) |
+| :--- | :--- |
+| Gemma 4 31B-IT | [revision 842da379](https://huggingface.co/api/models/google/gemma-4-31B-it/revision/842da3794eaa0b77d5f08bae87a17459d91ff475) |
+| EXAONE 4.5 33B | [revision 570aa4b1](https://huggingface.co/api/models/LGAI-EXAONE/EXAONE-4.5-33B/revision/570aa4b15a4f45ba1133072b45f50198f6e3b4fd) |
+| Qwen3.6-35B-A3B | [revision 995ad96e](https://huggingface.co/api/models/Qwen/Qwen3.6-35B-A3B/revision/995ad96eacd98c81ed38be0c5b274b04031597b0) |
+| Qwen3.6-27B | [revision 6a9e13bd](https://huggingface.co/api/models/Qwen/Qwen3.6-27B/revision/6a9e13bd6fc8f0983b9b99948120bc37f49c13e9) |
+| Nemotron 3 Nano Omni | [revision 24e67ea0](https://huggingface.co/api/models/nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16/revision/24e67ea000b7c2837fc8f9488aa2008524fac8ba) |
+| Granite 4.1 30B | [revision 4fae6278](https://huggingface.co/api/models/ibm-granite/granite-4.1-30b/revision/4fae6278f7132abf5e971f9de49ebbad09c54cce) |
+| MiniCPM5-1B | [revision 87179e5c](https://huggingface.co/api/models/openbmb/MiniCPM5-1B/revision/87179e5c1f455ef22e6223592d2d61351b525bfc) |
+| Hy-MT2-30B-A3B | [revision d3ead4db](https://huggingface.co/api/models/tencent/Hy-MT2-30B-A3B/revision/d3ead4dba61c09aac60a261a96ad1df3e705febb) |
+| North-Mini-Code-1.0 | [revision d11e61a8](https://huggingface.co/api/models/CohereLabs/North-Mini-Code-1.0/revision/d11e61a842617a22dc328552fa5bb86231ee4f37) |
+| DiffusionGemma 26B-A4B-IT | [revision f7f5b7f5](https://huggingface.co/api/models/google/diffusiongemma-26B-A4B-it/revision/f7f5b7f5fa82ffc52addd066915886d497f5517b) |
+| LLaDA2.2-flash | [revision ee562645](https://huggingface.co/api/models/inclusionAI/LLaDA2.2-flash/revision/ee56264534721014d8e651293543f6dc3fcb1f9c) |
+| LFM2.5-2.6B | [revision ab006873](https://huggingface.co/api/models/LiquidAI/LFM2.5-2.6B/revision/ab00687315bc1298e9d54e9c4b611dde9867ccc2) |
+| Ling-3.0-tiny | [revision 2f9b5474](https://huggingface.co/api/models/inclusionAI/Ling-3.0-tiny/revision/2f9b5474a86ecfe63cfc95f5c87ddb3a745bfe2d) |
+| Nemotron 3.5 Lightning | [revision d468880b](https://huggingface.co/api/models/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16/revision/d468880b6ad3c6e0d21377ce7242adaea4cc884d) |
+| Qwen3.8-27B | [revision 1d4bf0f2](https://huggingface.co/api/models/Qwen/Qwen3.8-27B/revision/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0) |
+
+## 프론티어 4개 모델 — 점수 provenance
+
+| 모델 | 공통 표 채택값 | 근거와 핵심 설정 |
 | :--- | :--- | :--- |
-| Claude Opus 5 | 공식 출시 모델, 2026-07 | [Anthropic 공식 발표](https://www.anthropic.com/news/claude-opus-5) · [System Card](https://www.anthropic.com/claude-opus-5-system-card) |
-| GPT-5.6 Sol | 공식 출시 모델, 2026-07 | [OpenAI 공식 발표](https://openai.com/index/gpt-5-6/) · [Developers 모델 페이지](https://developers.openai.com/api/docs/models/gpt-5.6-sol) |
-| Gemini 3.6 Pro | 공식 모델이 없어 **Gemini 3.1 Pro Preview**로 교체 | [Google DeepMind 모델 카드 목록](https://deepmind.google/models/model-cards/) · [Gemini 3.1 Pro 모델 카드](https://deepmind.google/models/model-cards/gemini-3-1-pro/) |
-| Grok 4.6 | 공식 출시 모델, 2026-08-12 | [xAI 공식 발표](https://x.ai/news/grok-4-6) |
-| DeepSeek V4 | **DeepSeek-V4-Pro (Max)**로 변형 고정 | [DeepSeek 공식 발표](https://api-docs.deepseek.com/news/news260424/) · [공식 모델 카드](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro) |
-| GLM-5.3 | 공식 출시 모델, 2026-08-14 | [Z.ai 공식 발표](https://z.ai/blog/glm-5.3) |
-| Qwen 3 (Max) | **Qwen3-Max-Thinking**으로 변형 고정 | [Qwen 공식 발표](https://qwen.ai/blog?id=qwen3-max-thinking) |
-| Llama 4 (400B) | **Llama 4 Maverick 17B-128E Instruct**, 400B total / 17B active, 2025-04 | [Meta 공식 모델 카드](https://huggingface.co/meta-llama/Llama-4-Maverick-17B-128E-Instruct) |
-| Kimi K3, 2026-05 | **Kimi K3**, 2026-07 | [Kimi 공식 발표](https://www.kimi.com/en/blog/kimi-k3) |
-| Mistral Large 3, 2026-06 | **Base / Instruct 행 분리**, 2025-12 | [Mistral 공식 발표](https://mistral.ai/news/mistral-3) · [공식 모델 카드](https://huggingface.co/mistralai/Mistral-Large-3-675B-Instruct-2512) |
-| Qwen 3 (72B) | **행 삭제** — 공식 Qwen3 크기 목록에 72B가 없음 | [Qwen3 공식 발표](https://qwenlm.github.io/blog/qwen3/) |
-| Mistral Small 4 (24B) | **119B total / 6.5B active**, 2026-03 | [Mistral 공식 발표](https://mistral.ai/news/mistral-small-4/) · [공식 모델 카드](https://huggingface.co/mistralai/Mistral-Small-4-119B-2603) |
-| Llama 4 Scout (17B) | **109B total / 17B active**, 2025-04 | [Meta 공식 모델 카드](https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E-Instruct) |
-| gpt-oss / Gemma 3 / Phi-4 / Qwen3의 2026 출시 표기 | 각각 2025-08 / 2025-03 / 2024-12 / 2025-04로 교정 | [gpt-oss](https://openai.com/index/introducing-gpt-oss/) · [Gemma 3](https://blog.google/innovation-and-ai/technology/developers-tools/gemma-3/) · [Phi-4](https://huggingface.co/microsoft/phi-4) · [Qwen3](https://qwenlm.github.io/blog/qwen3/) |
+| Claude Opus 5 | SWE Verified **96.0**; SWE Pro **79.2**; DeepSWE 1.1 **68.8**; OSWorld 2.0 **70.57**; BrowseComp **90.8**; HLE **56.3/64.7**; ARC-AGI-2 **90.42**; GDPval-AA v2 **1861** | [고정 System Card PDF](https://www-cdn.anthropic.com/b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude%20Opus%205%20System%20Card.pdf). 기본 adaptive thinking/max/default sampling, 평균 5회 unless noted. SWE 4종·DeepSWE·OSWorld는 5회. OSWorld=first-attempt success, 1080p, max 500 actions. HLE는 thinking=auto, 총 token≤1M, compaction 없음, Opus 4.6 grader; tools판=search/fetch/PTC/code. BrowseComp는 10M-token budget curve, 200K compaction trigger, Opus 4.7 grader와 unreleased effort config를 사용해 단순 max로 재표기하지 않음. |
+| GPT-5.6 Sol | SWE Pro **64.6**; DeepSWE 1.1 **72.7**; Terminal-Bench 2.1 **88.8**; OSWorld 2.0 **62.6**; BrowseComp **90.4**; GPQA Diamond **94.6**; MMMU-Pro **83.0/84.6**; GDPval-AA v2 **1747.8** | [OpenAI 공식 발표 표](https://openai.com/index/gpt-5-6/). 표가 개별 effort/scaffold/trials와 OSWorld metric subtype을 공개하지 않아 모두 partial config. Ultra 점수는 4-agent 설정이므로 Sol 단일행에 섞지 않음. |
+| Gemini 3.1 Pro Preview | SWE Verified **80.6**; SWE Pro Public **54.2**; Terminal-Bench 2.0 **68.5**; BrowseComp **85.9**; GPQA Diamond **94.3**; HLE **44.4/51.4**; MMMU-Pro **80.5**; ARC-AGI-2 **77.1** | [Model Card](https://deepmind.google/models/model-cards/gemini-3-1-pro/) · [평가 방법론 PDF](https://storage.googleapis.com/deepmind-media/gemini/gemini_3-1_pro_model_evaluation.pdf). Thinking High, pass@1, single attempt, default sampling. SWE Verified 10회이며 공식 harness의 impossible-item 3개를 고친 +0.6 조정 포함. SWE Pro 5회. HLE=full set(text+MM), no-tools/Search(blocklist)+Code. Terminal=Terminus-2. GDPval-AA **1317**은 version 미표기라 v2 공통열이 아닌 supplemental claim으로 분리. |
+| Grok 4.6 High | DeepSWE 1.1 **65.9**; Terminal-Bench 3.0 **26.0**; GDPval-AA v2 **1753** | [xAI 공식 발표](https://x.ai/news/grok-4-6). 표는 `Grok 4.6 High`를 명시하지만 tools/scaffold/trials는 미공개. 별도 공식 model card/tech report를 찾지 못했으므로 발표 밖의 설정을 추정하지 않음. |
 
-## 프론티어 모델 — 채택한 성능값
+### 프론티어 추가값의 근거
 
-| ID | 모델 | 벤치마크와 채택값 | 결과 근거 | 근거 유형 / 핵심 설정 |
-| :--- | :--- | :--- | :--- | :--- |
-| `frontier-claude-opus-5` | Claude Opus 5 | SWE-bench Verified **96.0%**<br>HLE **56.3%** no-tools / **64.7%** tools<br>OSWorld 2.0 **70.6%** success@1 | [Anthropic System Card §8.2, p.149](https://www.anthropic.com/claude-opus-5-system-card#page=149) · [§8.1, p.148](https://www.anthropic.com/claude-opus-5-system-card#page=148) · [§8.12.3, p.173](https://www.anthropic.com/claude-opus-5-system-card#page=173) | vendor-reported. SWE 500문항·5회 평균·adaptive thinking/max effort. HLE no-tools/tools 분리. OSWorld first-attempt success, 5회 평균, 최대 500 actions. |
-| `frontier-gpt-5-6-sol` | GPT-5.6 Sol | OSWorld 2.0 Partial **62.6%** | [OpenAI GPT-5.6 공식 발표, Computer use 표](https://openai.com/index/gpt-5-6/) | vendor-reported. 공개 표가 전체 하네스 설정을 제공하지 않음. 비교 모델 값과 운영자 표를 대조해 Partial reward로 식별. |
-| `frontier-gemini-3-1-pro` | Gemini 3.1 Pro Preview | SWE-bench Verified **80.6%**<br>τ² Retail **90.8%** / Telecom **99.3%**<br>GPQA Diamond **94.3%**<br>HLE **44.4%** no-tools / **51.4%** Search+Code | [Google DeepMind Gemini 3.1 Pro Model Card](https://deepmind.google/models/model-cards/gemini-3-1-pro/) | vendor-reported, Thinking High. SWE single attempt. τ²는 domain별 값이며 종합 점수가 아님. HLE 도구 설정 분리. |
-| `frontier-deepseek-v4-pro-max` | DeepSeek-V4-Pro (Max) | SWE-bench Verified **80.6%**<br>LiveCodeBench v6 **93.5%**<br>GPQA Diamond **90.1%**<br>HLE **37.7%** no-tools / **48.2%** tools<br>MMLU-Pro **87.5%** | [DeepSeek 공식 모델 카드](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro) · [공식 기술 보고서](https://arxiv.org/abs/2606.19348) | vendor-reported, Max effort. LCB pass@1-CoT. SWE는 in-house bash/file-edit harness, 500 steps. Base 체크포인트 값과 혼합하지 않음. |
-| `frontier-glm-5-3` | GLM-5.3 | HLE with tools **62.5%** | [Z.ai GLM-5.3 공식 발표](https://z.ai/blog/glm-5.3) | vendor-reported. temp 1.0, top-p .95, max generation 163,840, context management 사용. no-tools HLE와 비교 금지. |
-| `frontier-qwen3-max-thinking` | Qwen3-Max-Thinking | SWE-bench Verified **75.3%**<br>τ²-Bench **82.1%**<br>BFCL V4 **67.7%**<br>LiveCodeBench v6 **85.9%**<br>HLE text **30.2%** / tools **49.8%**<br>MMLU-Pro **85.7%** | [Qwen3-Max-Thinking 공식 발표](https://qwen.ai/blog?id=qwen3-max-thinking) | vendor-reported. τ² 공식 setting/no custom scaffold. BFCL 최대 100 interaction turns. HLE 30.2는 text subset. SWE scaffold·시행 횟수는 미공개. |
-| `frontier-llama-4-maverick-it` | Llama 4 Maverick 17B-128E Instruct | LiveCodeBench **43.4%**<br>GPQA Diamond **69.8%**<br>MMLU-Pro **80.5%**<br>MMMU **73.4%**<br>MathVista **73.7%** | [Meta 공식 모델 카드](https://huggingface.co/meta-llama/Llama-4-Maverick-17B-128E-Instruct) | vendor-reported, bf16 instruct checkpoint. 모두 0-shot. LCB pass@1, 2024-10-01–2025-02-01. Base checkpoint의 MMLU/MATH와 혼합하지 않음. |
-| `frontier-kimi-k3-max` | Kimi K3 (Max) | GPQA Diamond **93.5%**<br>HLE Full **43.5%** no-tools / **56.0%** general tools | [Moonshot AI 공식 모델 카드](https://huggingface.co/moonshotai/Kimi-K3/blob/main/README.md) | vendor-reported, effort=max, temp 1.0. no-tools는 single-step/top-p .95, tools는 agentic/top-p 1.0. |
-| `frontier-mistral-large-3-base` | Mistral Large 3 Base (675B) | GPQA Diamond **43.9%** | [Mistral 공식 모델 카드의 Base Model Benchmark Comparison](https://huggingface.co/mistralai/Mistral-Large-3-675B-Instruct-2512) | vendor-reported, Base checkpoint, 5-shot, no CoT. Instruct 행에 옮기지 않음. |
+- Claude의 README 추가값은 모두 같은 [System Card PDF](https://www-cdn.anthropic.com/b514064af1408018e64b1ad24e7d5e75850b4ffd/Claude%20Opus%205%20System%20Card.pdf)의 capability evaluation 절에서 추출했습니다. Chartography·BenchCAD는 no-tools/tools를, Toolathlon은 Pass@1/Pass@3/Pass³를 분리했습니다. HealthBench Professional은 length-adjusted **59.8**과 raw **73.4**를 구분하며 OpenAI의 length-adjustment 방식과 자동 직접 비교하지 않습니다. Harvey open-source Legal Agent Benchmark 값은 production safeguards와 safety-classifier 발동 시 Opus 4.8 fallback을 포함할 수 있는 system 결과입니다.
+- GPT-5.6 Sol의 추가값은 [OpenAI 발표의 모델 비교표](https://openai.com/index/gpt-5-6/)에서 Sol 열만 추출했습니다. `Agents' Last Exam`은 같은 페이지 본문 **53.6**, 표 **52.7**로 충돌하고 설정 차이가 공개되지 않았습니다. BrowseComp 본문 **92.2**는 비교표에서 Sol Ultra 값이고, Sol 열은 **90.4**입니다. README에는 구조화된 비교표의 Sol 열을 보존하며 HLE나 Ultra와 합치지 않습니다.
+- Gemini 추가값은 [Model Card](https://deepmind.google/models/model-cards/gemini-3-1-pro/)의 `gemini-3.1-pro-preview` 열만 사용했습니다. τ² Airline은 grading 품질 문제로 카드가 제외하므로 Retail/Telecom만 기록했습니다.
+- Grok 추가값은 [xAI 발표 표](https://x.ai/news/grok-4-6)의 `Grok 4.6 High` 열만 사용했습니다. 경쟁 모델 best-score 설명은 Grok 자체 harness 공개로 해석하지 않았습니다.
 
-### Arena Text Overall 운영자 스냅샷
+## 공개 가중치 15개 — 공통 표 provenance
 
-공식 [Arena Text 리더보드](https://arena.ai/leaderboard/text)의 **Overall / Style Control ON**, 화면 스냅샷 날짜 2026-08-12, 확인일 2026-08-18 기준입니다. README는 아래 rating을 정수로 반올림합니다.
+| 모델 | 공통 표 채택값 | 근거 유형·평가 설정 |
+| :--- | :--- | :--- |
+| Gemma 4 31B-IT | τ² avg **76.9**; LCB v6 **80.0**; IFBench **76.0**; GPQA-D **84.3**; HLE **19.5/26.5**; MMLU-Pro **85.2** | [owner card](https://huggingface.co/google/gemma-4-31B-it/blob/842da3794eaa0b77d5f08bae87a17459d91ff475/README.md) · [report](https://arxiv.org/html/2607.02770v2). IT 모델, 기본 thinking. HLE no-tools/search 분리. per-benchmark decoder/trials 일부 미공개. |
+| EXAONE 4.5 33B | τ² weighted **72.0**; LCB v6 **81.4**; IFBench **62.6**; GPQA-D **80.5**; MMLU-Pro **83.3**; MMMU **78.7**; MathVista-mini **85.0** | [owner card](https://huggingface.co/LGAI-EXAONE/EXAONE-4.5-33B/blob/570aa4b15a4f45ba1133072b45f50198f6e3b4fd/README.md) · [report](https://arxiv.org/html/2604.08644v1). 정확한 표 열=`EXAONE 4.5 33B (Reasoning)`. language temp1/top-p.95/max128K, vision max32K, MTP off; trials/scaffold 일부 미공개. |
+| Qwen3.6-35B-A3B | SWE-V **73.4**; LCB v6 **80.4**; GPQA-D **86.0**; HLE **21.4**; MMLU-Pro **85.2**; MMMU **81.7**; MathVista-mini **86.4** | [35B owner card](https://huggingface.co/Qwen/Qwen3.6-35B-A3B/blob/995ad96eacd98c81ed38be0c5b274b04031597b0/README.md); GPQA `Diamond` variant는 동일 공급사의 [27B 후속 비교표](https://huggingface.co/Qwen/Qwen3.6-27B/blob/6a9e13bd6fc8f0983b9b99948120bc37f49c13e9/README.md)가 같은 35B 값 86.0을 명시. SWE=internal bash+file-edit,temp1/top-p.95,200K. 나머지 mode/tools/trials 일부 미공개. |
+| Qwen3.6-27B | SWE-V **77.2**; LCB v6 **83.9**; GPQA-D **87.8**; HLE **24.0**; MMLU-Pro **86.2**; MMMU **82.9**; MathVista-mini **87.4** | [owner card](https://huggingface.co/Qwen/Qwen3.6-27B/blob/6a9e13bd6fc8f0983b9b99948120bc37f49c13e9/README.md). SWE=internal bash+file-edit,temp1/top-p.95,200K. 비에이전트 표의 mode/tools/trials는 미공개. |
+| Nemotron 3 Nano Omni | IFBench **74.2**; GPQA no-tools **72.2**; MMLU-Pro **77.3**; MMMU-val **70.8**; MathVista-mini **82.8** | [owner card](https://huggingface.co/nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16/blob/24e67ea000b7c2837fc8f9488aa2008524fac8ba/README.md) · [report](https://arxiv.org/html/2604.24954v2). text=NeMo-Skills,temp1/top_p1,max output131072. GPQA 4회, IFBench 1회. MMMU/MathVista는 reasoning-on. 보고서의 `TauBench V2 (Telecom) 42.7`은 τ²/Sierra 식별이 없어 supplemental로 분리. |
+| Granite 4.1 30B | MMLU **80.16**; MMLU-Pro **64.09**; GSM8K **94.16**; HumanEval **88.41** | [IBM owner card](https://huggingface.co/ibm-granite/granite-4.1-30b/blob/4fae6278f7132abf5e971f9de49ebbad09c54cce/README.md). MMLU 5-shot, MMLU-Pro 5-shot CoT, GSM8K 8-shot, HumanEval pass@1. 카드의 generic `GPQA 45.76`은 exact Diamond variant를 owner source가 밝히지 않아 supplemental로 이동. |
+| MiniCPM5-1B | τ² Telecom-AA **79.53**; BFCL v4 **25.15**; LCB v6 Avg3 **33.52**; IFBench **46.67**; GPQA-D **26.26**; MMLU-Pro **48.85** | [owner card](https://huggingface.co/openbmb/MiniCPM5-1B/blob/87179e5c1f455ef22e6223592d2d61351b525bfc/README.md) · [official image](https://raw.githubusercontent.com/OpenBMB/MiniCPM/719e4fcfabff9b9c16f179c3f2986dfbd6c6047f/assets/minicpm5/public_leaderboard_en.png). 정확한 열=`MiniCPM5-1B (Thinking)`. τ²는 Telecom-AA 단일 domain. LCB만 Avg3, 나머지 일부 config 미공개. |
+| Hy-MT2-30B-A3B | IFBench **50.67** | [owner card](https://huggingface.co/tencent/Hy-MT2-30B-A3B/blob/d3ead4dba61c09aac60a261a96ad1df3e705febb/README.md) · [report](https://arxiv.org/html/2605.22064v2). 해당 행은 `(T)` 표시가 없어 non-thinking. benchmark-specific decoding/trials 미공개. |
+| North-Mini-Code-1.0 | SWE-V **67.6**; LCB v6 **70.3** | [owner card](https://huggingface.co/CohereLabs/North-Mini-Code-1.0/blob/d11e61a842617a22dc328552fa5bb86231ee4f37/README.md) · [official figure](https://cdn-uploads.huggingface.co/production/uploads/62668f725fb8d521d94d8451/xR7kZ3X9RKEZrbgD6hpG1.png). 3 seeds,temp1/top-p.95. SWE=SWE-Agent v1.1.0; LCB=no-tools code generation. |
+| DiffusionGemma 26B-A4B-IT | τ² avg **56.2**; LCB v6 **69.1**; GPQA-D **73.2**; HLE **11.0/11.9**; MMLU-Pro **77.6** | [owner card](https://huggingface.co/google/diffusiongemma-26B-A4B-it/blob/f7f5b7f5fa82ffc52addd066915886d497f5517b/README.md). Entropy-Bound sampler,max48 denoise,temp .8→.4,entropy bound .1,adaptive stop. HLE no-tools/search 분리; shots/pass@k/trials 일부 미공개. |
+| LLaDA2.2-flash | SWE-V **49.28**; BFCL v4 **60.78**; IFBench **30.20**; GPQA-D **48.67** | [owner card](https://huggingface.co/inclusionAI/LLaDA2.2-flash/blob/ee56264534721014d8e651293543f6dc3fcb1f9c/README.md) · [report PDF](https://raw.githubusercontent.com/inclusionAI/LLaDA2.X/f402f0b52817e1c3586a024ebf89e69ad8ca5523/LLaDA2_2_tech_report.pdf). 전 값 5회 평균; SWE=Claude Code. 128K,temp1,block32,threshold.5,editing threshold0. BFCL subtype/IF/GPQA 세부 일부 미공개. |
+| LFM2.5-2.6B | BFCL v4 **56.88**; LCB v6 **59.41**; IFBench **59.17** | [owner card](https://huggingface.co/LiquidAI/LFM2.5-2.6B/blob/ab00687315bc1298e9d54e9c4b611dde9867ccc2/README.md). pure reasoning/always thinks. benchmark별 pass@k,trials,tools,harness와 BFCL subtype 미공개. |
+| Ling-3.0-tiny | BFCL v4 FC **62.72**; IFBench **63.61**; GPQA-D **73.40**; HLE **9.30** | [owner card](https://huggingface.co/inclusionAI/Ling-3.0-tiny/blob/2f9b5474a86ecfe63cfc95f5c87ddb3a745bfe2d/README.md) · [official image](https://cdn-uploads.huggingface.co/production/uploads/6502cf8fbdaeae26417cd3c9/g9Thw4ohjkDGYw0Cq7mKi.png). 정확한 열=`Ling-3.0-tiny (Thinking)`; BFCL=FC. 나머지 tools/trials 일부 미공개. |
+| Nemotron 3.5 Lightning | SWE-V **51.56**; IFBench loose **71.88**; GPQA-D **75.44**; HLE text/no-tools **11.72**; MMLU-Pro **81.94** | [owner card](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16/blob/d468880b6ad3c6e0d21377ce7242adaea4cc884d/README.md) · [repro index](https://github.com/NVIDIA-NeMo/Gym/blob/a62c30035519f738e583b6c1f08254cde70ced1b/nemotron_recipes/lightning-3.5/reproducibility.md). SWE OpenHands1.17,500×5,max200 turns; GPQA198×8 no-tools; HLE2158×1 no-tools/GPT-4o judge; temp1/top-p.95/thinking. IF/MMLU-Pro recipe 미공개. |
+| Qwen3.8-27B | LCB v6 **90.3**; IFBench **79.5**; GPQA-D **89.2**; HLE **30.8** | [owner card](https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md). HLE=GPT-4o judge. 공통 4개 지표의 mode/tools/trials 일부 미공개; 일반 xhigh 권장값을 평가 설정으로 소급하지 않음. |
 
-| 문서 모델 | exact Arena model key | rating | README 표시 | 95% CI | 근거 유형 |
-| :--- | :--- | ---: | ---: | :---: | :--- |
-| Claude Opus 5 | `claude-opus-5-high` | 1493.2301 | **1493** | 1487.9256–1498.5346 | operator-collected, 20,030 votes |
-| Claude Opus 5 | `claude-opus-5-max` | 1489.4036 | **1489** | 1482.4536–1496.3536 | operator-collected, 9,679 votes |
-| GPT-5.6 Sol | `gpt-5.6-sol-xhigh` | 1481.0972 | **1481** | 1475.3718–1486.8227 | operator-collected, 15,558 votes |
-| Gemini 3.1 Pro Preview | `gemini-3.1-pro-preview` | 1486.4669 | **1486** | 1483.1338–1489.8000 | operator-collected, 95,107 votes |
-| Grok 4.6 | `grok-4.6-high` | 1463.6171 | **1464** | 1453.4137–1473.8205 | operator-collected, 3,396 votes |
-| Llama 4 Maverick Instruct | `llama-4-maverick-17b-128e-instruct` | 1326.9917 | **1327** | 동적 UI 참조 | operator-collected |
-| Kimi K3 (Max) | `kimi-k3-max` | 1488.7811 | **1489** | 1482.5812–1494.9811 | operator-collected, 11,969 votes |
-| Mistral Large 3 Instruct | `mistral-large-3` | 1414.6894 | **1415** | 1411.5201–1417.8587 | operator-collected, 59,309 votes |
+## 추가 공식 결과 provenance
 
-## 120B 이하 오픈웨이트 — 채택한 개발사 결과
+small_models_2026.md의 추가 결과는 다음 owner-source 표·그림에서 해당 모델 열을 전사했습니다. 경쟁 모델 열은 사용하지 않았습니다.
 
-| ID | 모델 | 벤치마크와 채택값 | 결과 근거 | 근거 유형 / 핵심 설정 |
-| :--- | :--- | :--- | :--- | :--- |
-| `small-gpt-oss-120b-vendor` | gpt-oss-120b | SWE-bench Verified **62.4%**<br>GPQA Diamond **80.1%** no-tools / **80.9%** tools<br>HLE **14.9%** no-tools / **19.0%** tools<br>MMLU **90.0%** | [OpenAI gpt-oss Model Card, Table 3](https://cdn.openai.com/pdf/419b6906-9da6-406c-a19d-1bb078ac7637/oai_gpt-oss_model_card.pdf) · [공식 모델 메타데이터](https://developers.openai.com/api/docs/models/gpt-oss-120b) | vendor-reported, high reasoning. 모든 eval은 공개 MXFP4 체크포인트. SWE agent scaffold는 카드에 미공개. |
-| `small-gemma-3-27b-it` | Gemma 3 27B-IT | HumanEval **87.8%**<br>GPQA Diamond **42.4%**<br>MMLU **76.9%**<br>MMLU-Pro **67.5%**<br>MATH **89.0%**<br>GSM8K **95.9%**<br>MMMU val **64.9%**<br>MathVista testmini **67.6%** | [Google Gemma 3 Model Card](https://ai.google.dev/gemma/docs/core/model_card_3) · [Gemma 3 Technical Report](https://arxiv.org/abs/2503.19786) | vendor-reported, 27B instruction-tuned. HumanEval pass@1. text 지표 0-shot, GPQA/MMLU-Pro/GSM8K CoT. |
-| `small-mistral-small-4` | Mistral Small 4 119B-A6.5B | GPQA Diamond **71.2%**<br>MMLU-Pro **78.0%** | [Mistral 공식 모델 카드](https://huggingface.co/mistralai/Mistral-Small-4-119B-2603) · [고정 benchmark chart](https://huggingface.co/mistralai/Mistral-Small-4-119B-2603/resolve/a11f36bebf709121056b1dbcc943d1c6afbe494d/images/image2.png) | vendor-reported, `reasoning_effort=high`, 권장 temp .7. shot 수는 미공개. |
-| `small-llama-4-scout-vendor` | Llama 4 Scout 17B-16E Instruct | LiveCodeBench **32.8%**<br>GPQA Diamond **57.2%**<br>MMLU-Pro **74.3%**<br>MMMU **69.4%**<br>MathVista **70.7%** | [Meta 공식 모델 카드](https://huggingface.co/meta-llama/Llama-4-Scout-17B-16E-Instruct) | vendor-reported, bf16 instruct checkpoint, 0-shot. LCB pass@1, 2024-10-01–2025-02-01. |
-| `small-phi-4-vendor` | Phi-4 | HumanEval **82.6%**<br>GPQA Diamond **56.1%**<br>MMLU **84.8%**<br>MMLU-Pro **70.4%**<br>MATH **80.4%** | [Microsoft 공식 모델 카드](https://huggingface.co/microsoft/phi-4) · [Phi-4 Technical Report](https://arxiv.org/abs/2412.08905) | vendor-reported. HumanEval/GPQA/MMLU/MATH는 simple-evals, temp .5. MMLU-Pro는 Microsoft 내부 eval 설정. |
-| `small-qwen3-8b-thinking` | Qwen3-8B (Thinking) | LiveCodeBench v5 **57.5%**<br>GPQA Diamond **62.0%** | [Qwen3 Technical Report, Table 17](https://arxiv.org/abs/2505.09388) | vendor-reported. Thinking mode, temp .6/top-p .95/top-k 20, max output 32,768. GPQA는 문항당 10회 sampling 평균. |
+| 모델 | 추가 결과가 실린 고정 근거 | extraction/config 메모 |
+| :--- | :--- | :--- |
+| Gemma 4 31B-IT | [card](https://huggingface.co/google/gemma-4-31B-it/blob/842da3794eaa0b77d5f08bae87a17459d91ff475/README.md) · [report Table 5 및 부록](https://arxiv.org/html/2607.02770v2) | IT/Thinking 열. MMMLU, MMMU-Pro, MATH-Vision을 각각 MMLU/MMMU/MathVista로 바꾸지 않음. |
+| EXAONE 4.5 33B | [card benchmark tables](https://huggingface.co/LGAI-EXAONE/EXAONE-4.5-33B/blob/570aa4b15a4f45ba1133072b45f50198f6e3b4fd/README.md) | `EXAONE 4.5 33B (Reasoning)` 열만 전사. |
+| Qwen3.6 35B/27B | [35B card](https://huggingface.co/Qwen/Qwen3.6-35B-A3B/blob/995ad96eacd98c81ed38be0c5b274b04031597b0/README.md) · [27B card](https://huggingface.co/Qwen/Qwen3.6-27B/blob/6a9e13bd6fc8f0983b9b99948120bc37f49c13e9/README.md) | SWE-Pro=`refined` set; Terminal2.0=Harbor/Terminus-2,5회. τ³는 τ²와 분리. |
+| Nemotron 3 Nano Omni | [card tables](https://huggingface.co/nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16/blob/24e67ea000b7c2837fc8f9488aa2008524fac8ba/README.md) · [report](https://arxiv.org/html/2604.24954v2) | reasoning off/on 열을 순서대로 유지. LCB는 v5; `TauBench V2 (Telecom)`은 τ² 식별 미공개; OSWorld는 generic label이므로 v6/τ²/OSWorld2로 바꾸지 않음. |
+| Granite 4.1 30B | [owner card tables](https://huggingface.co/ibm-granite/granite-4.1-30b/blob/4fae6278f7132abf5e971f9de49ebbad09c54cce/README.md) | `GPQA 45.76`은 card label 그대로 보존. BFCL은 v3, IFEval Avg는 vendor aggregate. |
+| MiniCPM5-1B | [official result image](https://raw.githubusercontent.com/OpenBMB/MiniCPM/719e4fcfabff9b9c16f179c3f2986dfbd6c6047f/assets/minicpm5/public_leaderboard_en.png) | `MiniCPM5-1B (Thinking)` 열. AIME/HMMT는 Avg16, LCBv6는 Avg3. |
+| Hy-MT2 | [report Tables 2–5](https://arxiv.org/html/2605.22064v2) · [official image](https://huggingface.co/tencent/Hy-MT2-30B-A3B/resolve/d3ead4dba61c09aac60a261a96ad1df3e705febb/imgs/main_result.png) | non-thinking 30B-A3B 행; XCOMET/CometKiwi/GEMBA 순서를 유지. |
+| North Mini Code | [official result image](https://cdn-uploads.huggingface.co/production/uploads/62668f725fb8d521d94d8451/xR7kZ3X9RKEZrbgD6hpG1.png) · [tech blog](https://huggingface.co/blog/CohereLabs/introducing-north-mini-code) | final release row, 3 seeds. SFT-only/pass@10와 human ablation은 제외. |
+| DiffusionGemma | [owner card full table](https://huggingface.co/google/diffusiongemma-26B-A4B-it/blob/f7f5b7f5fa82ffc52addd066915886d497f5517b/README.md) | own IT column. lower-is-better OmniDoc edit distance 단위 유지. |
+| LLaDA2.2-flash | [owner card](https://huggingface.co/inclusionAI/LLaDA2.2-flash/blob/ee56264534721014d8e651293543f6dc3fcb1f9c/README.md) · [report Tables 1–2](https://raw.githubusercontent.com/inclusionAI/LLaDA2.X/f402f0b52817e1c3586a024ebf89e69ad8ca5523/LLaDA2_2_tech_report.pdf) | vendor-labelled τ² 80.33은 인용 문헌 불일치 때문에 supplemental claim으로만 보존. LCB version 미공개. |
+| LFM2.5 | [owner card full table](https://huggingface.co/LiquidAI/LFM2.5-2.6B/blob/ab00687315bc1298e9d54e9c4b611dde9867ccc2/README.md) | τ³ Banking을 τ²로 바꾸지 않음. |
+| Ling 3 tiny | [official benchmark image](https://cdn-uploads.huggingface.co/production/uploads/6502cf8fbdaeae26417cd3c9/g9Thw4ohjkDGYw0Cq7mKi.png) | Thinking 열. GDPval 772의 단위가 표에 없어 `%`를 붙이지 않음. |
+| Nemotron 3.5 Lightning | [owner card main table](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-BF16/blob/d468880b6ad3c6e0d21377ce7242adaea4cc884d/README.md) · [recipes](https://github.com/NVIDIA-NeMo/Gym/blob/a62c30035519f738e583b6c1f08254cde70ced1b/nemotron_recipes/lightning-3.5/reproducibility.md) | main table 수치. agent-harness별 별도 SWE/TB 이미지 점수는 bare-model 값으로 합치지 않아 본문에서 제외. |
+| Qwen3.8-27B | [owner card text/VL tables](https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md) | first Qwen3.8 column only. OSWorld-Verified/WebArena-Verified는 OSWorld2/original WebArena와 다름. with-CI/without-CI를 분리. |
 
-## 120B 이하 오픈웨이트 — 운영자 결과
+## 명시적 제외·충돌 로그
 
-### SWE-bench Verified
-
-| 모델·시스템 | 채택값 | 고정 결과 근거 | 근거 유형 / 설정 |
-| :--- | ---: | :--- | :--- |
-| `mini-SWE-agent + gpt-oss-120b` | **26.0%** | [SWE-bench experiments metadata, commit `1faa91c`](https://github.com/swe-bench/experiments/blob/1faa91cade0562ba62b66c1c99e71f7b72d96f13/evaluation/bash-only/20250807_mini-v1.7.0_gpt-oss-120b/metadata.yaml) · [공식 generated leaderboard data](https://github.com/swe-bench/swe-bench.github.io/blob/f42505b21a0eb31a9cc1204caafcbe0da6c1a259/data/leaderboards.json) | operator-evaluated, mini-SWE-agent v1.7.0, 1 attempt, checked=true |
-| `mini-SWE-agent + Llama 4 Scout Instruct` | **9.06%** | [SWE-bench experiments metadata, commit `1faa91c`](https://github.com/swe-bench/experiments/blob/1faa91cade0562ba62b66c1c99e71f7b72d96f13/evaluation/bash-only/20250720_mini-v0.0.0-Llama-4-Scout-17B-Instruct/metadata.yaml) · [공식 generated leaderboard data](https://github.com/swe-bench/swe-bench.github.io/blob/f42505b21a0eb31a9cc1204caafcbe0da6c1a259/data/leaderboards.json) | operator-evaluated, mini-SWE-agent v0.0.0, 1 attempt, checked=true |
-
-### BFCL V4 Overall Accuracy
-
-[BFCL 공식 리더보드](https://gorilla.cs.berkeley.edu/leaderboard.html)와 [공식 결과 CSV](https://gorilla.cs.berkeley.edu/data_overall.csv), 운영자 commit [`f7cf735`](https://github.com/ShishirPatil/gorilla/commit/f7cf7359b7ac615a0b294831c5ba2bc95ee4a000), `bfcl-eval` 2025.12.17 기준입니다.
-
-| exact BFCL row | 형식 | Overall Accuracy | 근거 유형 |
-| :--- | :---: | ---: | :--- |
-| `Gemma-3-27b-it (Prompt)` | Prompt | **29.47%** | operator-evaluated |
-| `Llama-4-Scout-17B-16E-Instruct (FC)` | native FC | **28.13%** | operator-evaluated |
-| `Phi-4 (Prompt)` | Prompt | **28.79%** | operator-evaluated |
-| `Qwen3-8B (FC)` | native FC | **42.57%** | operator-evaluated. Prompt 대안은 40.43%이며 표에는 FC만 채택. |
-
-### Arena Text Overall
-
-동일한 [공식 Arena 스냅샷](https://arena.ai/leaderboard/text) 기준입니다.
-
-| 모델 | exact Arena model key | rating | 문서 표시 | 95% CI | 근거 유형 |
-| :--- | :--- | ---: | ---: | :---: | :--- |
-| gpt-oss-120b | `gpt-oss-120b` | 1352.2256 | **1352** | 1347.8827–1356.5686 | operator-collected, 30,775 votes |
-| Gemma 3 27B-IT | `gemma-3-27b-it` | 1365.8657 | **1366** | 1362.1899–1369.5415 | operator-collected, 47,585 votes |
-| Llama 4 Scout Instruct | `llama-4-scout-17b-16e-instruct` | 1322.4888 | **1322** | 1317.7824–1327.1953 | operator-collected, 30,402 votes |
-| Phi-4 | `phi-4` | 1256.1473 | **1256** | 1251.5468–1260.7478 | operator-collected, 24,126 votes |
-
-## 제거·제외한 대표 주장
-
-| 기존 또는 후보 주장 | 처리 | 1차 출처 확인 결과 |
+| 후보 주장 | 판정 | 이유 |
 | :--- | :---: | :--- |
-| Claude Opus 5 · SWE-bench **52.3%** | **96.0%로 교정** | [Anthropic System Card](https://www.anthropic.com/claude-opus-5-system-card#page=149)가 500문항·5회 평균 96.0%를 명시. |
-| Claude Opus 5 · WebArena **61.8%** | **제거** | [WebArena 공식 리더보드](https://docs.google.com/spreadsheets/d/1M801lEpBbKSNwP-vDBkC_pF7LdyGU1f_ufZb_NWNBZQ/edit?usp=sharing)와 Anthropic 자료에 해당 결과가 없음. |
-| GPT-5.6 Sol · GAIA **46.8%** | **제거** | [GAIA 공식 결과](https://huggingface.co/datasets/gaia-benchmark/results_public)에 model-only exact row가 없음. agent/scaffold 제출은 모델 고유 점수로 사용하지 않음. |
-| GPT-5.6 Sol · OSWorld **36.5%** | **62.6% Partial로 교정** | [OpenAI 공식 발표](https://openai.com/index/gpt-5-6/)의 실제 OSWorld 2.0 값. |
-| GPT-5.6 Sol · τ² **71.2%** | **제거** | 71.2는 OpenAI 발표의 SEC-Bench Pro. [Sierra 공식 제출](https://github.com/sierra-research/tau2-bench/blob/main/web/leaderboard/public/submissions/gpt-5-6-sol_sierra_2026-08-04/submission.json)은 τ² core가 null이고 τ³ Banking만 제공. |
-| GPT-5.6 Sol · BFCL **93.8%** | **제거** | [BFCL V4 공식 결과](https://gorilla.cs.berkeley.edu/data_overall.csv)에 해당 행이 없음. |
-| GPT-5.6 Sol · LiveCodeBench **79.5%** | **제거** | 79.5는 OpenAI 발표에서 GPT-5.6 Luna의 MMMU Pro 값이며 [LCB 공식 데이터](https://livecodebench.github.io/performances_generation.json)에 GPT-5.6이 없음. |
-| GPT-5.6 Sol · HumanEval **96.1%** | **제거** | 공식 GPT-5.6 자료에 직접 결과가 없고 HumanEval은 중앙 운영자 리더보드가 없음. |
-| Qwen3-Max · GPQA **87.4%** | **제외** | Qwen 출처 표의 label이 `GPQA`일 뿐 Diamond subset을 명시하지 않아 GPQA Diamond 열에 넣지 않음. |
-| GLM-5.3 · HLE **62.5%** | **도구 설정을 붙여 채택** | 공식값은 plain HLE가 아니라 `HLE w/ Tools`; README에 이를 명시. |
-| Gemma 3 · LiveCodeBench | **제외** | 같은 공식 자료 안에 29.7과 39.0이 공존하고 평가 기간·버전을 확정할 수 없음. |
-| Mistral Small 4 · LiveCodeBench **63.6%** | **제외** | 공식 chart에 기간·버전·pass@k가 없음. |
-| Qwen3-8B · MATH-500 **97.4%** | **제외** | MATH-500은 문서의 MATH 열과 다른 benchmark. |
-| gpt-oss · Tau-Bench Retail/Airline | **제외** | OpenAI 카드의 값은 원래 τ-bench이며 τ²가 아님. |
-| Claude/GPT/Kimi · τ³ Banking | **제외** | τ³ Banking은 τ² core와 다른 벤치마크이므로 τ² 열에 옮기지 않음. |
-| DeepSeek V4 Pro Base의 MMLU/MATH/GSM8K | **제외** | 표는 Max post-trained 변형으로 고정했으므로 Base 체크포인트 수치를 혼합하지 않음. |
-| Llama 4 Base의 MMLU/MATH | **제외** | 표는 Instruct 체크포인트로 고정. |
-| Mistral Large 3 LiveCodeBench **34.4%** | **제외** | vendor chart가 release window와 pass@k를 공개하지 않음. |
+| GPT-5.6 Sol `Agents' Last Exam`을 HLE로 사용 | 제외 | 서로 다른 benchmark. 같은 OpenAI 페이지 내부 53.6/52.7 충돌도 별도 주석 처리. |
+| GPT-5.6 Sol OSWorld 2.0을 `Partial`로 단정 | 제외 | 공식 발표 표가 62.6은 주지만 Binary/Partial subtype을 밝히지 않음. |
+| Gemini SWE Verified 80.6을 표준 운영자 row로 간주 | 제외 | Google corrected internal harness 및 +0.6 조정, 10회 결과이므로 해당 설정을 함께 기록. |
+| Grok 4.6의 발표 밖 scaffold/trials 추정 | 제외 | 공식 model card/tech report가 발견되지 않았고 발표 표도 설정을 공개하지 않음. |
+| Nemotron Omni LCB v5 63.2를 v6 열에 사용 | 제외 | exact version 불일치. |
+| Nemotron Omni `TauBench V2 (Telecom) 42.7`을 τ² 열에 사용 | 제외 | owner report가 `τ²` 또는 Sierra benchmark라고 식별하지 않아 exact variant를 확정할 수 없음. |
+| Granite GPQA 45.76을 GPQA Diamond 열에 사용 | 제외 | IBM owner card의 행명은 generic `GPQA`. [HF 직원이 추가한 VERIFIED metadata](https://huggingface.co/ibm-granite/granite-4.1-30b/blob/bd3a9ae805aa66e7af9df2896667dd0957a81916/.eval_results/gpqa_diamond.yaml)는 owner/operator 1차 근거가 아니므로 variant 확정에 사용하지 않음. |
+| Granite BFCL v3 73.68을 V4 열에 사용 | 제외 | version 불일치. |
+| MiniCPM/Nemotron Omni τ² Telecom을 전체 평균으로 표기 | 제외 | 단일 domain 값. 공통 셀에도 domain label 유지. |
+| LLaDA `τ²-Bench 80.33`을 canonical τ²로 채택 | 제외 | 보고서 참고문헌이 Sierra τ²가 아니라 2024 original τ-bench를 가리킴. 원문 주장으로만 보존. |
+| Qwen3.8 OSWorld-Verified/WebArena-Verified를 OSWorld2/WebArena로 변경 | 제외 | benchmark variant 불일치. |
+| Gemma MMMLU/MMMU-Pro/MATH-Vision을 MMLU/MMMU/MathVista로 변경 | 제외 | 서로 다른 benchmark. |
+| 모델 카드 일반 권장 temperature/top-p를 모든 eval에 적용 | 제외 | 해당 benchmark 실제 설정이라는 명시가 없음. |
 
-## 벤치마크 정의·결과 URL
+## Benchmark 정의·운영자 URL
 
-아래 링크는 벤치마크와 평가 조건을 정의하거나 운영자 결과를 게시합니다. 링크 자체만으로 특정 모델 점수를 증명하지는 않습니다.
+아래 링크는 benchmark 정의 또는 운영자 결과를 설명하며, 그 자체가 이 문서의 모델 점수를 증명하지는 않습니다.
 
-| 벤치마크 | 공식 정의 / 결과 | 기록 시 필수 한정자 |
+| benchmark | 공식 정의/운영자 URL | 필수 한정자 |
 | :--- | :--- | :--- |
-| SWE-bench Verified | [공식 사이트](https://www.swebench.com/) · [experiments](https://github.com/swe-bench/experiments) | variant, agent/scaffold, 시행 횟수, 추론 설정 |
-| GAIA | [리더보드](https://huggingface.co/spaces/gaia-benchmark/leaderboard) · [공개 결과](https://huggingface.co/datasets/gaia-benchmark/results_public) | test/dev, agent·tool·router 구성, 제출자 신원 |
-| OSWorld 2.0 | [프로젝트](https://osworld-v2.xlang.ai/) · [공식 결과 JSON](https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json) · [`v2026.06.24`](https://github.com/xlang-ai/OSWorld-V2/releases/tag/v2026.06.24) | task version, step budget, Binary/Partial/success@1 |
-| WebArena | [원 benchmark](https://webarena.dev/og/) · [공식 리더보드](https://docs.google.com/spreadsheets/d/1M801lEpBbKSNwP-vDBkC_pF7LdyGU1f_ufZb_NWNBZQ/edit?usp=sharing) | WebArena/VisualWebArena, harness, trajectory |
-| τ² / τ³ | [τ² core](https://taubench.com/leaderboard?benchmark=core) · [τ³ knowledge](https://taubench.com/leaderboard?benchmark=knowledge) · [저장소](https://github.com/sierra-research/tau2-bench) | 세대, domain, Pass^k, user simulator, task version |
-| BFCL V4 | [리더보드](https://gorilla.cs.berkeley.edu/leaderboard.html) · [CSV](https://gorilla.cs.berkeley.edu/data_overall.csv) | V4/commit, Overall/세부 범주, FC/Prompt |
-| LiveCodeBench | [리더보드](https://livecodebench.github.io/leaderboard.html) · [결과 JSON](https://livecodebench.github.io/performances_generation.json) | version/date window, scenario, pass@k |
-| HumanEval | [OpenAI 저장소](https://github.com/openai/human-eval) | pass@k, sample 수, temperature; 공식 중앙 leaderboard 없음 |
-| GPQA Diamond | [공식 저장소](https://github.com/idavidrein/gpqa) | Diamond/Main/Extended subset, shot, sampling |
-| HLE | [공식 프로젝트](https://lastexam.ai/) | Full/Text subset, tools, browsing blocklist, token budget |
-| MMLU | [공식 저장소](https://github.com/hendrycks/test) | shot 수, accuracy/EM, checkpoint |
-| MMLU-Pro | [공식 dataset](https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro) | shot, CoT, macro average/EM |
-| MATH | [공식 저장소](https://github.com/hendrycks/math) | MATH vs MATH-500, shot, answer extraction |
-| GSM8K | [OpenAI 저장소](https://github.com/openai/grade-school-math) | GSM8K vs MGSM, shot, CoT |
-| MMMU | [공식 프로젝트](https://mmmu-benchmark.github.io/) | MMMU/MMMU-Pro, val/test, vision setting |
-| MathVista | [공식 프로젝트](https://mathvista.github.io/) | test/testmini, shot, answer extraction |
-| Arena Text | [공식 리더보드](https://arena.ai/leaderboard/text) | exact model key, category, Style Control, snapshot date, CI/votes |
+| SWE-bench Verified | [공식 사이트](https://www.swebench.com/) · [experiments](https://github.com/swe-bench/experiments) | variant, agent/scaffold, trials |
+| SWE-bench Pro | [Scale 공개 저장소](https://github.com/scaleapi/SWE-bench_Pro-os) | public/refined set, scaffold, trials |
+| OSWorld 2.0 | [프로젝트](https://osworld-v2.xlang.ai/) · [공식 결과 JSON](https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json) | task version, Binary/Partial/success |
+| τ² / τ³ | [τ² core](https://taubench.com/leaderboard?benchmark=core) · [τ³ knowledge](https://taubench.com/leaderboard?benchmark=knowledge) · [repo](https://github.com/sierra-research/tau2-bench) | generation, domain, Pass^k, user simulator |
+| BFCL | [공식 리더보드](https://gorilla.cs.berkeley.edu/leaderboard.html) · [결과 CSV](https://gorilla.cs.berkeley.edu/data_overall.csv) | version, FC/Prompt, Overall/category |
+| LiveCodeBench | [공식 리더보드](https://livecodebench.github.io/leaderboard.html) · [결과 JSON](https://livecodebench.github.io/performances_generation.json) | version/date window, scenario, pass@k |
+| IFBench | [AllenAI 공식 저장소](https://github.com/allenai/IFBench) | loose/strict, prompt level, generation |
+| IFEval | [Google Research 코드·데이터](https://github.com/google-research/google-research/tree/master/instruction_following_eval) | strict/loose, instruction/prompt, aggregate |
+| Multi-IF | [Meta 공식 저장소](https://github.com/facebookresearch/Multi-IF) | language, turns, metric |
+| Terminal-Bench | [공식 사이트](https://www.tbench.ai/) · [v2 repo](https://github.com/harbor-framework/terminal-bench-2) · [v2.1 repo](https://github.com/harbor-framework/terminal-bench-2-1) | exact version, agent, timeout, trials |
+| GPQA Diamond | [공식 저장소](https://github.com/idavidrein/gpqa) | Diamond subset, shots, sampling |
+| HLE | [공식 프로젝트](https://lastexam.ai/) | Full/Text, tools, judge |
+| MMLU / MMLU-Pro | [MMLU](https://github.com/hendrycks/test) · [MMLU-Pro](https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro) | shots, CoT, accuracy/EM |
+| GSM8K | [OpenAI 공식 저장소](https://github.com/openai/grade-school-math) | shots, CoT, extraction |
+| HumanEval | [OpenAI 공식 저장소](https://github.com/openai/human-eval) | pass@k, samples, temperature |
+| MMMU / MathVista | [MMMU](https://mmmu-benchmark.github.io/) · [MathVista](https://mathvista.github.io/) | val/test, Pro 여부, mini/testmini |
+| ARC-AGI | [ARC Prize](https://arcprize.org/) | version, verified status, effort |
 
-## 비교 주의사항
+## 읽는 법
 
-- README의 표는 “가장 높은 숫자” 순위표가 아니라 공개 출처 지도입니다. 설정이 다르면 숫자 크기만 비교하지 않습니다.
-- SWE-bench의 vendor score와 `mini-SWE-agent` 운영자 score는 같은 모델이라도 서로 다른 시스템 결과입니다.
-- Arena는 동적 데이터입니다. 위 값은 스냅샷 날짜와 exact model key를 보존했으며 이후 달라질 수 있습니다.
-- HLE, OSWorld, τ, BFCL, LiveCodeBench는 설정 차이가 결과에 크게 영향을 줍니다. 셀의 짧은 표기보다 이 문서의 상세 조건이 우선합니다.
-- 동적 리더보드에는 조회일을, 고정 결과에는 가능하면 commit/tag를 기록합니다.
+- 이 저장소는 “가장 높은 점수” 순위표가 아니라 **공식 주장과 설정의 출처 지도**입니다.
+- operator score와 vendor score, bare model과 agent system, no-tools와 tools는 직접 같은 조건으로 간주하지 않습니다.
+- 동적 페이지가 바뀌더라도 재검증할 수 있도록 가능한 경우 HF SHA, Git commit, 고정 PDF를 우선 기록했습니다.
