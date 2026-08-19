@@ -2,7 +2,7 @@
 
 검증 기준일: **2026-08-19 (KST)**
 
-프론티어 4개와 recent open-weight 5개의 공식 원문을 Browser에서 확인했습니다. recent 로스터의 기본 크기 기준은 총 120B 이하이지만, 사용자가 요청한 최신 `K-EXAONE 2.0 750B-A37B`는 명시적 size exception으로 포함했습니다. gpt-oss-120b/20b도 별도 참고 기준선으로 조사했지만, 두 모델은 2025-08-05 공개라 2026-04-01 이후 로스터와 채움률 통계에서는 제외했습니다.
+프론티어 4개와 recent open-weight 5개의 공식 원문을 Browser에서 확인했습니다. recent 로스터의 기본 크기 기준은 총 120B 이하이지만, 사용자가 요청한 최신 `K-EXAONE 2.0 A37B`는 활성 규모를 대표 이름으로 쓰는 명시적 size exception으로 포함했습니다. A37B는 토큰당 약 37B active parameter이며 실제 total은 750B입니다. gpt-oss-120b/20b도 별도 참고 기준선으로 조사했지만, 두 모델은 2025-08-05 공개라 2026-04-01 이후 로스터와 채움률 통계에서는 제외했습니다.
 
 ## 검증 규칙
 
@@ -53,7 +53,7 @@ recent 모델의 `artifact` 정수는 고정 revision Hugging Face API 응답의
 | Gemma 4 31B-IT | [revision 842da379](https://huggingface.co/api/models/google/gemma-4-31B-it/revision/842da3794eaa0b77d5f08bae87a17459d91ff475) |
 | DiffusionGemma 26B-A4B-IT | [revision f7f5b7f5](https://huggingface.co/api/models/google/diffusiongemma-26B-A4B-it/revision/f7f5b7f5fa82ffc52addd066915886d497f5517b) |
 | LLaDA2.2-flash | [revision ee562645](https://huggingface.co/api/models/inclusionAI/LLaDA2.2-flash/revision/ee56264534721014d8e651293543f6dc3fcb1f9c) |
-| K-EXAONE 2.0 750B-A37B | [revision b1592069](https://huggingface.co/api/models/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B/revision/b159206982abe02813dae76f0bd568dbd3d4f53f): owner **750B / ~37B active**, artifact **749,357,484,800** |
+| K-EXAONE 2.0 A37B | [revision b1592069](https://huggingface.co/api/models/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B/revision/b159206982abe02813dae76f0bd568dbd3d4f53f): owner **~37B active / 750B total**, artifact **749,357,484,800**. A37B는 standalone·total size가 아님. |
 | Qwen3.8-27B | [revision 1d4bf0f2](https://huggingface.co/api/models/Qwen/Qwen3.8-27B/revision/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0) |
 | gpt-oss-120b | [OpenAI Model Card Table 1](https://arxiv.org/html/2508.10925v1): total **116.83B**, active **5.13B**, checkpoint **60.8 GiB** |
 | gpt-oss-20b | [OpenAI Model Card Table 1](https://arxiv.org/html/2508.10925v1): total **20.91B**, active **3.61B**, checkpoint **12.8 GiB** |
@@ -81,7 +81,7 @@ recent 모델의 `artifact` 정수는 고정 revision Hugging Face API 응답의
 | Gemma 4 31B-IT | τ² avg **76.9**; LCB v6 **80.0**; IFBench **76.0**; GPQA-D **84.3**; HLE **19.5/26.5**; MMLU-Pro **85.2** | [owner card](https://huggingface.co/google/gemma-4-31B-it/blob/842da3794eaa0b77d5f08bae87a17459d91ff475/README.md) · [report](https://arxiv.org/html/2607.02770v2). IT 모델, 기본 thinking. HLE no-tools/search 분리. per-benchmark decoder/trials 일부 미공개. |
 | DiffusionGemma 26B-A4B-IT | τ² avg **56.2**; LCB v6 **69.1**; GPQA-D **73.2**; HLE **11.0/11.9**; MMLU-Pro **77.6** | [owner card](https://huggingface.co/google/diffusiongemma-26B-A4B-it/blob/f7f5b7f5fa82ffc52addd066915886d497f5517b/README.md). Entropy-Bound sampler, max48 denoise, temp .8→.4, entropy bound .1, adaptive stop. HLE no-tools/search 분리; shots/pass@k/trials 일부 미공개. |
 | LLaDA2.2-flash | SWE-V **49.28**; BFCL v4 **60.78**; IFBench **30.20**; GPQA-D **48.67** | [owner card](https://huggingface.co/inclusionAI/LLaDA2.2-flash/blob/ee56264534721014d8e651293543f6dc3fcb1f9c/README.md) · [report PDF](https://raw.githubusercontent.com/inclusionAI/LLaDA2.X/f402f0b52817e1c3586a024ebf89e69ad8ca5523/LLaDA2_2_tech_report.pdf). 전 값 5회 평균; SWE=Claude Code. 128K, temp1, block32, threshold.5, editing threshold0. BFCL subtype/IF/GPQA 세부 일부 미공개. |
-| K-EXAONE 2.0 750B-A37B | SWE-V **68.2**; IFBench **72.6**; GPQA-D **82.2**; HLE text-only **18.3**; MMLU-Pro **83.5** | [고정 owner card BF16 열](https://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B/blob/b159206982abe02813dae76f0bd568dbd3d4f53f/README.md) · [report Table 6](https://arxiv.org/html/2608.04505v1#S6.T6) · [Appendix C](https://arxiv.org/html/2608.04505v1#A3). report의 K-EXAONE 2.0 **Reasoning** 첫 열만 사용. SWE=mini-SWE-agent, temp1/top-p.95, 32,768 tokens/step, 256K, 4h; trials/pass@k 미공개. 나머지는 owner internal eval의 official setup, trials 일부 미공개. |
+| K-EXAONE 2.0 A37B | SWE-V **68.2**; IFBench **72.6**; GPQA-D **82.2**; HLE text-only **18.3**; MMLU-Pro **83.5** | [고정 owner card BF16 열](https://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B/blob/b159206982abe02813dae76f0bd568dbd3d4f53f/README.md) · [report Table 6](https://arxiv.org/html/2608.04505v1#S6.T6) · [Appendix C](https://arxiv.org/html/2608.04505v1#A3). report의 K-EXAONE 2.0 **Reasoning** 첫 열만 사용. SWE=mini-SWE-agent, temp1/top-p.95, 32,768 tokens/step, 256K, 4h; trials/pass@k 미공개. 나머지는 owner internal eval의 official setup, trials 일부 미공개. |
 | Qwen3.8-27B | LCB v6 **90.3**; IFBench **79.5**; GPQA-D **89.2**; HLE **30.8** | [owner card](https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md). HLE=GPT-4o judge. 공통 4개 지표의 mode/tools/trials 일부 미공개; 일반 xhigh 권장값을 평가 설정으로 소급하지 않음. |
 
 ## 참고용 gpt-oss — 점수 provenance
@@ -102,7 +102,7 @@ OpenAI의 [오픈 모델 요약표](https://openai.com/open-models/)는 GPQA에 
 | Gemma 4 31B-IT | [card](https://huggingface.co/google/gemma-4-31B-it/blob/842da3794eaa0b77d5f08bae87a17459d91ff475/README.md) · [report Table 5 및 부록](https://arxiv.org/html/2607.02770v2) | IT/Thinking 열. MMMLU, MMMU-Pro, MATH-Vision을 각각 MMLU/MMMU/MathVista로 바꾸지 않음. |
 | DiffusionGemma | [owner card full table](https://huggingface.co/google/diffusiongemma-26B-A4B-it/blob/f7f5b7f5fa82ffc52addd066915886d497f5517b/README.md) | own IT column. lower-is-better OmniDoc edit distance 단위 유지. |
 | LLaDA2.2-flash | [owner card](https://huggingface.co/inclusionAI/LLaDA2.2-flash/blob/ee56264534721014d8e651293543f6dc3fcb1f9c/README.md) · [report Tables 1–2](https://raw.githubusercontent.com/inclusionAI/LLaDA2.X/f402f0b52817e1c3586a024ebf89e69ad8ca5523/LLaDA2_2_tech_report.pdf) | vendor-labelled τ² 80.33은 인용 문헌 불일치 때문에 supplemental claim으로만 보존. LCB version 미공개. |
-| K-EXAONE 2.0 750B-A37B | [고정 owner card BF16 table](https://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B/blob/b159206982abe02813dae76f0bd568dbd3d4f53f/README.md) · [report Table 6](https://arxiv.org/html/2608.04505v1#S6.T6) · [Appendix C](https://arxiv.org/html/2608.04505v1#A3) | first K-EXAONE 2.0 column only. τ³-Banking은 τ²에 넣지 않음. Terminal 2.1은 Terminus-2/temp1/top-p.95/32,768 tokens per step/256K/4h. Claw-Eval은 patched commit `d3f02d4`; card/report 충돌은 아래 로그에 분리. |
+| K-EXAONE 2.0 A37B | [고정 owner card BF16 table](https://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B/blob/b159206982abe02813dae76f0bd568dbd3d4f53f/README.md) · [report Table 6](https://arxiv.org/html/2608.04505v1#S6.T6) · [Appendix C](https://arxiv.org/html/2608.04505v1#A3) | first K-EXAONE 2.0 column only. τ³-Banking은 τ²에 넣지 않음. Terminal 2.1은 Terminus-2/temp1/top-p.95/32,768 tokens per step/256K/4h. Claw-Eval은 patched commit `d3f02d4`; card/report 충돌은 아래 로그에 분리. |
 | Qwen3.8-27B | [owner card text/VL tables](https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md) | first Qwen3.8 column only. OSWorld-Verified/WebArena-Verified는 OSWorld2/original WebArena와 다름. with-CI/without-CI를 분리. |
 | gpt-oss-120b/20b | [OpenAI Model Card Table 3, 9, 10](https://arxiv.org/html/2508.10925v1) | Table 3은 high reasoning. AIME/GPQA/HLE/Codeforces의 no-tools/tools를 분리하고 Tau-Bench Retail/Airline은 original τ-bench로 보존. Table 9·10의 SimpleQA/PersonQA/BBQ는 effort 미공개이며 원문 proportion을 ×100으로 환산; SimpleQA/PersonQA는 no browsing. accuracy와 hallucination rate, BBQ ambiguous/disambiguated accuracy를 각각 분리. |
 
@@ -115,10 +115,10 @@ OpenAI의 [오픈 모델 요약표](https://openai.com/open-models/)는 GPQA에 
 | Gemini SWE Verified 80.6을 표준 운영자 row로 간주 | 제외 | Google corrected internal harness 및 +0.6 조정, 10회 결과이므로 해당 설정을 함께 기록. |
 | Grok 4.6의 발표 밖 scaffold/trials 추정 | 제외 | 공식 model card/tech report가 발견되지 않았고 발표 표도 설정을 공개하지 않음. |
 | LLaDA `τ²-Bench 80.33`을 canonical τ²로 채택 | 제외 | 보고서 참고문헌이 Sierra τ²가 아니라 2024 original τ-bench를 가리킴. 원문 주장으로만 보존. |
-| K-EXAONE 2.0 `τ³-Banking 14.2`를 τ²로 채택 | 제외 | benchmark generation/domain이 다름. supplemental에만 보존. |
-| K-EXAONE 2.0 SciCode/Claw-Eval 단일값 선택 | 보류 | owner card는 SciCode **37.4**, generic Claw-Eval **77.7**; 동봉 report v1 Reasoning Table 6은 SciCode **40.1**, Claw-Eval (general) **80.0**. 설정 차이를 설명하지 않아 두 값을 함께 기록. |
-| EXAONE 4.5 점수를 최신 K-EXAONE 2.0에 사용 | 제외 | 33B multimodal EXAONE 4.5와 750B text K-EXAONE 2.0은 별개 체크포인트·라이선스·평가열. |
-| K-EXAONE 2.0을 ≤120B 모델로 분류 | 제외 | total 750B이며 active 37B 또는 양자화 형식은 total-parameter 기준을 낮추지 않음. 사용자 지정 size exception으로만 포함. |
+| K-EXAONE 2.0 A37B `τ³-Banking 14.2`를 τ²로 채택 | 제외 | benchmark generation/domain이 다름. supplemental에만 보존. |
+| K-EXAONE 2.0 A37B SciCode/Claw-Eval 단일값 선택 | 보류 | owner card는 SciCode **37.4**, generic Claw-Eval **77.7**; 동봉 report v1 Reasoning Table 6은 SciCode **40.1**, Claw-Eval (general) **80.0**. 설정 차이를 설명하지 않아 두 값을 함께 기록. |
+| EXAONE 4.5 점수를 최신 K-EXAONE 2.0 A37B에 사용 | 제외 | 33B multimodal EXAONE 4.5와 `K-EXAONE 2.0 A37B`(750B total text)는 별개 체크포인트·라이선스·평가열. |
+| K-EXAONE 2.0 A37B를 ≤120B total 모델로 분류 | 제외 | total 750B이며 active 37B 또는 양자화 형식은 total-parameter 기준을 낮추지 않음. 사용자 지정 size exception으로만 포함. |
 | Qwen3.8 OSWorld-Verified/WebArena-Verified를 OSWorld2/WebArena로 변경 | 제외 | benchmark variant 불일치. |
 | Gemma MMMLU/MMMU-Pro/MATH-Vision을 MMLU/MMMU/MathVista로 변경 | 제외 | 서로 다른 benchmark. |
 | gpt-oss Tau-Bench Retail/Airline을 τ² 열에 사용 | 제외 | OpenAI 카드가 인용하는 것은 2024 original τ-bench. |

@@ -58,7 +58,7 @@ Terminal-Bench는 모델별로 공식 보고된 버전이 다르므로 셀에 �
 - 값이 하나도 없는 benchmark 열은 제거했습니다.
 - 추가 결과는 version·subset이 달라 공통 행렬 통계에서 제외했습니다.
 
-2026-04-01 이후 공개 가중치 모델은 Gemma 계열·LLaDA2.2·Qwen3.8과 최신 K-EXAONE 2.0의 5개 체크포인트를 [small_models_2026.md](./small_models_2026.md)에서 추적합니다. K-EXAONE 2.0은 총 750B로 기존 120B 기준을 넘는 사용자 지정 size exception입니다. gpt-oss-120b/20b는 출시 기간 예외 참고표로 같은 문서에 분리했으며, 각 수치의 고정 URL·설정·판정은 [SOURCES.md](./SOURCES.md)에서 확인할 수 있습니다.
+2026-04-01 이후 공개 가중치 모델은 Gemma 계열·LLaDA2.2·Qwen3.8과 최신 **K-EXAONE 2.0 A37B**의 5개 체크포인트를 [small_models_2026.md](./small_models_2026.md)에서 추적합니다. A37B는 토큰당 약 37B active parameter를 뜻하며, 실제 체크포인트는 총 750B인 사용자 지정 size exception입니다. gpt-oss-120b/20b는 출시 기간 예외 참고표로 같은 문서에 분리했으며, 각 수치의 고정 URL·설정·판정은 [SOURCES.md](./SOURCES.md)에서 확인할 수 있습니다.
 
 ## 기여
 

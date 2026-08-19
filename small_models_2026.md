@@ -1,6 +1,6 @@
 # Recent Open-Weight Models (released since 2026-04-01)
 
-아래 **5개 체크포인트만** 추적합니다. 기본 기준은 총 파라미터 120B 이하, 2026-04-01 이후 공개, 현재 내려받을 수 있는 가중치입니다. `K-EXAONE 2.0`은 사용자가 요청한 **최신 EXAONE 예외**로 추가했으며 총 750B이므로 크기 기준에서는 명시적으로 제외됩니다. **2026-08-19 (KST)** 기준으로 각 공식 모델 카드·기술 보고서·출시 문서를 Browser에서 다시 열어 대상 모델 열을 직접 판독했습니다.
+아래 **5개 체크포인트만** 추적합니다. 기본 기준은 총 파라미터 120B 이하, 2026-04-01 이후 공개, 현재 내려받을 수 있는 가중치입니다. 최신 EXAONE은 토큰당 활성 규모를 강조해 `K-EXAONE 2.0 A37B`로 표시합니다. 다만 A37B는 별도 37B 체크포인트가 아니라 총 750B MoE의 약 37B active 구성이므로 크기 기준에서는 명시적 예외입니다. **2026-08-19 (KST)** 기준으로 각 공식 모델 카드·기술 보고서·출시 문서를 Browser에서 다시 열어 대상 모델 열을 직접 판독했습니다.
 
 `-`는 0점이 아니라 정확히 일치하는 공식 값이 없다는 뜻입니다. `partial config`는 모델·benchmark·값은 확인되지만 shot, tools, pass@k, trials 또는 harness 일부가 공개되지 않았다는 뜻입니다. gpt-oss 두 모델은 요청에 따라 **참고용**으로만 추가했으며, 2026 로스터와 채움률 통계에서는 제외합니다.
 
@@ -11,10 +11,10 @@
 | [**google/gemma-4-31B-it**](https://huggingface.co/google/gemma-4-31B-it) | 2026-04-02 | LM 30.7B + vision ~0.55B<br><sub>artifact 31,273,088,876</sub> | Apache-2.0 | multimodal IT · Thinking |
 | [**google/diffusiongemma-26B-A4B-it**](https://huggingface.co/google/diffusiongemma-26B-A4B-it) | 2026-06-10 | 25.2B / 3.8B active + vision<br><sub>artifact 25,823,778,864</sub> | Apache-2.0 | diffusion multimodal IT |
 | [**inclusionAI/LLaDA2.2-flash**](https://huggingface.co/inclusionAI/LLaDA2.2-flash) | 2026-07-16 | 100B non-embedding<br><sub>artifact 102,889,705,216; active 미공개</sub> | Apache-2.0 | diffusion MoE |
-| [**LGAI-EXAONE/K-EXAONE-2.0-750B-A37B**](https://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B) | 2026-07-31<sup>1</sup> | 750B / 37B active<br><sub>artifact 749,357,484,800</sub> | Apache-2.0 | multilingual MoE · **size exception** |
+| [**LGAI-EXAONE/K-EXAONE-2.0-750B-A37B**](https://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B) | 2026-07-31<sup>1</sup> | **37B active** / 750B total<br><sub>artifact 749,357,484,800</sub> | Apache-2.0 | multilingual MoE · **A37B tracked** |
 | [**Qwen/Qwen3.8-27B**](https://huggingface.co/Qwen/Qwen3.8-27B) | 2026-08-13<sup>2</sup> | 27B dense<br><sub>artifact 27,781,427,952</sub> | Apache-2.0 | multimodal dense |
 
-<sup>1</sup> 16개 BF16 weight shard를 포함한 첫 전체 커밋 날짜. 기술 보고서는 2026-08-05 공개.
+<sup>1</sup> A37B는 토큰당 약 37B active parameter를 뜻하며 standalone·total size가 아닙니다. 실제 total은 750B이므로 ≤120B 기본 기준의 사용자 지정 예외입니다. 16개 BF16 weight shard를 포함한 첫 전체 커밋 날짜는 2026-07-31이고, 기술 보고서는 2026-08-05 공개됐습니다.
 
 <sup>2</sup> 빈 저장소 생성일이 아니라 첫 전체 weight shard 공개 커밋 날짜.
 
@@ -27,7 +27,7 @@
 | **Gemma 4 31B-IT** | - | **76.9%**<br><sub>3-domain average</sub> | - | **80.0%**<br><sub>Thinking</sub> | **76.0%**<br><sub>Thinking</sub> |
 | **DiffusionGemma 26B-A4B-IT** | - | **56.2%**<br><sub>average over 3</sub> | - | **69.1%**<br><sub>partial config</sub> | - |
 | **LLaDA2.2-flash** | **49.28%**<br><sub>Claude Code · 5회</sub> | - | **60.78%**<br><sub>5회 · subtype 미공개</sub> | - | **30.20%**<br><sub>5회 · partial config</sub> |
-| **K-EXAONE 2.0 750B-A37B** | **68.2%**<br><sub>Reasoning · mini-SWE-agent · partial config</sub> | - | - | - | **72.6%**<br><sub>Reasoning · official setup · partial config</sub> |
+| **K-EXAONE 2.0 A37B** | **68.2%**<br><sub>Reasoning · mini-SWE-agent · partial config</sub> | - | - | - | **72.6%**<br><sub>Reasoning · official setup · partial config</sub> |
 | **Qwen3.8-27B** | - | - | - | **90.3%**<br><sub>partial config</sub> | **79.5%**<br><sub>partial config</sub> |
 
 ## 공통 비교 — 지식·추론
@@ -37,7 +37,7 @@
 | **Gemma 4 31B-IT** | **84.3%**<br><sub>Thinking</sub> | **19.5%** <sub>no tools</sub><br>**26.5%** <sub>search</sub> | **85.2%**<br><sub>Thinking</sub> |
 | **DiffusionGemma 26B-A4B-IT** | **73.2%**<br><sub>partial config</sub> | **11.0%** <sub>no tools</sub><br>**11.9%** <sub>search</sub> | **77.6%**<br><sub>partial config</sub> |
 | **LLaDA2.2-flash** | **48.67%**<br><sub>5회 · partial config</sub> | - | - |
-| **K-EXAONE 2.0 750B-A37B** | **82.2%**<br><sub>Reasoning · official setup · partial config</sub> | **18.3%**<br><sub>Reasoning · text-only · partial config</sub> | **83.5%**<br><sub>Reasoning · official setup · partial config</sub> |
+| **K-EXAONE 2.0 A37B** | **82.2%**<br><sub>Reasoning · official setup · partial config</sub> | **18.3%**<br><sub>Reasoning · text-only · partial config</sub> | **83.5%**<br><sub>Reasoning · official setup · partial config</sub> |
 | **Qwen3.8-27B** | **89.2%**<br><sub>partial config</sub> | **30.8%**<br><sub>GPT-4o judge · tools 미공개</sub> | - |
 
 ## 추가 공식 결과
@@ -49,7 +49,7 @@
 | **Gemma 4 31B-IT** | AIME 2026 no-tools **89.2%**; Codeforces **2150 Elo**; SciCode **43.0%**; BigBench Extra Hard **74.4%**; IFEval **98.9%**; Terminal-Bench Hard **36.0%**; τ² Airline **75.0%** / Retail **86.4%** / Telecom **69.3%**. |
 | **DiffusionGemma 26B-A4B-IT** | AIME 2026 no-tools **69.1%**; Codeforces **1429 Elo**; BigBench Extra Hard **47.6%**. |
 | **LLaDA2.2-flash** | Agentic Avg **53.83%**; General Avg **56.81%**; SWE-bench Pro **30.10%**; SWE-bench Multilingual **25.00%**; vendor-labelled τ²-Bench **80.33%**<sup>3</sup>; Claw-Eval **64.22%**; PinchBench **81.66%**; MCP-Atlas **46.21%**; BFCL v3 **67.17%**; AIME 2026 **62.24%**; OlympiadBench **74.48%**; LiveCodeBench version 미공개 **44.77%**; Multi-IF **73.67%**; KOR-Bench **60.96%**; LongBench v2 **45.13%**. |
-| **K-EXAONE 2.0 750B-A37B** | <sub>report 값=Reasoning; card 충돌값=BF16·mode 미공개</sub><br>AIME 2026 **92.3%**; HMMT Feb 2026 **78.4%**; IMO-AnswerBench **78.6%**; SciCode **40.1%** <sub>report</sub> / **37.4%** <sub>card, 충돌</sub>; Terminal-Bench 2.1 **43.8%** <sub>Terminus-2</sub>; τ³-Banking **14.2%**; Claw-Eval (general) **80.0%** <sub>report</sub> / generic Claw-Eval **77.7%** <sub>card, label·값 충돌</sub>; IFEval **92.4%**; OpenAI-MRCR ≤128K macro-average **94.4%**; AA-LCR **56.2%**; Ko-LongBench **89.6%**; KMMLU-Pro **69.1%**; CLIcK **84.2%**; HRM8K-KSM **91.1%**; MMMLU **86.6%**; GlobalMMLU-Lite **86.6%**; PolyMath **71.3%**; KGC-Safety (in-house) **99.8%**; ROK-Fortress **89.5%**. |
+| **K-EXAONE 2.0 A37B** | <sub>report 값=Reasoning; card 충돌값=BF16·mode 미공개</sub><br>AIME 2026 **92.3%**; HMMT Feb 2026 **78.4%**; IMO-AnswerBench **78.6%**; SciCode **40.1%** <sub>report</sub> / **37.4%** <sub>card, 충돌</sub>; Terminal-Bench 2.1 **43.8%** <sub>Terminus-2</sub>; τ³-Banking **14.2%**; Claw-Eval (general) **80.0%** <sub>report</sub> / generic Claw-Eval **77.7%** <sub>card, label·값 충돌</sub>; IFEval **92.4%**; OpenAI-MRCR ≤128K macro-average **94.4%**; AA-LCR **56.2%**; Ko-LongBench **89.6%**; KMMLU-Pro **69.1%**; CLIcK **84.2%**; HRM8K-KSM **91.1%**; MMMLU **86.6%**; GlobalMMLU-Lite **86.6%**; PolyMath **71.3%**; KGC-Safety (in-house) **99.8%**; ROK-Fortress **89.5%**. |
 | **Qwen3.8-27B** | Terminal-Bench 2.1 **73.0**; SWE-bench Pro refined **61.7%**; NL2Repo-Bench **42.3%**; DeepSWE 1.1 **42.2%**; QwenSWEBench **79.0%**; CoWorkBench **70.7%**; JobBench **33.4%**; Agents' Last Exam Pass@1 **20.4%** / Score **42.9**. |
 
 | 모델 | 추가 멀티모달·전문화 결과 |
