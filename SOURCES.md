@@ -58,7 +58,7 @@ recent 모델의 `artifact` 정수는 고정 revision Hugging Face API 응답의
 | gpt-oss-120b | [OpenAI Model Card Table 1](https://arxiv.org/html/2508.10925v1): total **116.83B**, active **5.13B**, checkpoint **60.8 GiB** |
 | gpt-oss-20b | [OpenAI Model Card Table 1](https://arxiv.org/html/2508.10925v1): total **20.91B**, active **3.61B**, checkpoint **12.8 GiB** |
 
-## 프론티어 4개 모델 — 점수 provenance
+## [프론티어 4개 모델](./README.md#frontier-models) — 점수 provenance
 
 | 모델 | 공통 표 채택값 | 근거와 핵심 설정 |
 | :--- | :--- | :--- |
@@ -74,7 +74,7 @@ recent 모델의 `artifact` 정수는 고정 revision Hugging Face API 응답의
 - Gemini 추가값은 [Model Card](https://deepmind.google/models/model-cards/gemini-3-1-pro/)의 exact preview 열만 사용했습니다. τ² Airline은 grading 품질 문제로 카드가 제외하므로 Retail/Telecom만 기록했습니다.
 - Grok 추가값은 [xAI 발표 표](https://x.ai/news/grok-4-6)의 `Grok 4.6 High` 열만 사용했습니다.
 
-## Recent open-weight 5개 — 공통 표 provenance
+## [Recent open-weight 5개](./README.md#recent-open-weight) — 공통 표 provenance
 
 | 모델 | 공통 표 채택값 | 근거 유형·평가 설정 |
 | :--- | :--- | :--- |
@@ -84,7 +84,7 @@ recent 모델의 `artifact` 정수는 고정 revision Hugging Face API 응답의
 | K-EXAONE 2.0 A37B | SWE-V **68.2**; IFBench **72.6**; GPQA-D **82.2**; HLE text-only **18.3**; MMLU-Pro **83.5** | [고정 owner card BF16 열](https://huggingface.co/LGAI-EXAONE/K-EXAONE-2.0-750B-A37B/blob/b159206982abe02813dae76f0bd568dbd3d4f53f/README.md) · [report Table 6](https://arxiv.org/html/2608.04505v1#S6.T6) · [Appendix C](https://arxiv.org/html/2608.04505v1#A3). report의 K-EXAONE 2.0 **Reasoning** 첫 열만 사용. SWE=mini-SWE-agent, temp1/top-p.95, 32,768 tokens/step, 256K, 4h; trials/pass@k 미공개. 나머지는 owner internal eval의 official setup, trials 일부 미공개. |
 | Qwen3.8-27B | LCB v6 **90.3**; IFBench **79.5**; GPQA-D **89.2**; HLE **30.8** | [owner card](https://huggingface.co/Qwen/Qwen3.8-27B/blob/1d4bf0f2ff6012fd82039f2fa52739d0dd7c60c0/README.md). HLE=GPT-4o judge. 공통 4개 지표의 mode/tools/trials 일부 미공개; 일반 xhigh 권장값을 평가 설정으로 소급하지 않음. |
 
-## 참고용 gpt-oss — 점수 provenance
+## [참고용 gpt-oss](./README.md#gpt-oss-reference) — 점수 provenance
 
 OpenAI 모델 카드 Table 3의 **high reasoning effort** 열과 기본 system prompt/pass@1 결과를 사용했습니다. 모든 평가는 두 모델의 **MXFP4 양자화 체크포인트**로 수행됐습니다. SWE의 scaffold·trials, GPQA/HLE의 정확한 tool 구성·shots·trials, HLE subset·judge 등은 표에 공개되지 않아 partial config입니다.
 
@@ -127,7 +127,7 @@ OpenAI의 [오픈 모델 요약표](https://openai.com/open-models/)는 GPQA에 
 
 ## Benchmark 정의·운영자 URL
 
-아래 링크는 benchmark 정의 또는 운영자 결과를 설명하며, 그 자체가 이 문서의 모델 점수를 증명하지는 않습니다.
+아래 링크는 benchmark 정의 또는 운영자 결과를 설명하며, 그 자체가 README의 모델 점수를 증명하지는 않습니다.
 
 | benchmark | 공식 정의/운영자 URL | 필수 한정자 |
 | :--- | :--- | :--- |
